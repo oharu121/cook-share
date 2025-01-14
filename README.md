@@ -84,5 +84,8 @@ CookShareは、ユーザーがレシピを作成、カスタマイズ、共有�
 - OpenAI APIによる食材の組み合わせ提案
 - ユーザー履歴に基づくパーソナライズ
 
+### 画面遷移図
+![画面遷移図](https://www.figma.com/design/UuxJYnm1XTnH7QQOYe21yz/cook-share?node-id=27-117&t=dl4Bn9eHbK8C7nME-1)
+
 ## 📝 ライセンス (License)
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
