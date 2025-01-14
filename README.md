@@ -87,5 +87,10 @@ CookShareは、ユーザーがレシピを作成、カスタマイズ、共有�
 ### 画面遷移図
 ![画面遷移図](https://www.figma.com/design/UuxJYnm1XTnH7QQOYe21yz/cook-share?node-id=27-117&t=dl4Bn9eHbK8C7nME-1)
 
+## 📊 データベース設計 (Database Design)
+![ER図](docs/er/er.png)
+
+詳細なER図とデータベース設計については[docs/er/er.puml](docs/er/er.puml)を参照してください。
+
 ## 📝 ライセンス (License)
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
