@@ -11,8 +11,8 @@ table(users) {
   primary_key(id)
   email
   encrypted_password
-  name
-  image
+  username
+  profile_image
   bio
   created_at
   updated_at
@@ -21,7 +21,7 @@ table(users) {
 table(recipes) {
   primary_key(id)
   foreign_key(user_id)
-  foreign_key(original_id)
+  foreign_key(original_recipe_id)
   title
   description
   cooking_time
@@ -52,7 +52,7 @@ table(ingredients) {
 table(recipe_steps) {
   primary_key(id)
   foreign_key(recipe_id)
-  number
+  step_number
   description
   image
 }
@@ -79,7 +79,7 @@ table(shopping_lists) {
 
 table(shopping_list_items) {
   primary_key(id)
-  foreign_key(list_id)
+  foreign_key(shopping_list_id)
   foreign_key(ingredient_id)
   quantity
   unit
@@ -112,7 +112,7 @@ table(comments) {
 table(recipe_images) {
   primary_key(id)
   foreign_key(recipe_id)
-  url
+  image_url
   is_primary
   created_at
 }

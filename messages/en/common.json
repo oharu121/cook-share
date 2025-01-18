@@ -1,0 +1,35 @@
+{
+  "service": {
+    "title": "CookShare",
+    "description": "Create, customize, and share recipes with our community",
+    "createButton": "Create Recipe"
+  },
+  "navigation": {
+    "home": "Home",
+    "recipes": "Recipes",
+    "profile": "Profile",
+    "settings": "Settings"
+  },
+  "recipe": {
+    "difficulty": {
+      "easy": "Easy",
+      "medium": "Medium",
+      "hard": "Hard"
+    },
+    "cookingTime": "Cooking Time",
+    "servings": "Servings",
+    "ingredients": "Ingredients",
+    "steps": "Steps",
+    "category": "Category"
+  },
+  "categories": {
+    "breakfast": "Breakfast",
+    "lunch": "Lunch",
+    "dinner": "Dinner",
+    "dessert": "Dessert",
+    "appetizer": "Appetizer",
+    "mainCourse": "Main Course",
+    "vegetarian": "Vegetarian",
+    "quickAndEasy": "Quick & Easy"
+  }
+}
