@@ -1,0 +1,141 @@
+@startuml
+' Styling
+!define table(x) class x << (T,#FFAAAA) >>
+!define primary_key(x) <u>x</u>
+!define foreign_key(x) #x#
+hide methods
+hide stereotypes
+
+' Tables
+table(users) {
+  primary_key(id)
+  email
+  encrypted_password
+  username
+  profile_image
+  bio
+  created_at
+  updated_at
+}
+
+table(recipes) {
+  primary_key(id)
+  foreign_key(user_id)
+  foreign_key(original_recipe_id)
+  title
+  description
+  cooking_time
+  servings
+  difficulty_level
+  status
+  created_at
+  updated_at
+}
+
+table(recipe_ingredients) {
+  primary_key(id)
+  foreign_key(recipe_id)
+  foreign_key(ingredient_id)
+  quantity
+  unit
+}
+
+table(ingredients) {
+  primary_key(id)
+  name
+  category
+  unit_type
+  created_at
+  updated_at
+}
+
+table(recipe_steps) {
+  primary_key(id)
+  foreign_key(recipe_id)
+  step_number
+  description
+  image
+}
+
+table(recipe_categories) {
+  primary_key(id)
+  name
+  description
+}
+
+table(recipe_category_mappings) {
+  primary_key(id)
+  foreign_key(recipe_id)
+  foreign_key(category_id)
+}
+
+table(shopping_lists) {
+  primary_key(id)
+  foreign_key(user_id)
+  name
+  created_at
+  updated_at
+}
+
+table(shopping_list_items) {
+  primary_key(id)
+  foreign_key(shopping_list_id)
+  foreign_key(ingredient_id)
+  quantity
+  unit
+  is_checked
+}
+
+table(favorites) {
+  primary_key(id)
+  foreign_key(user_id)
+  foreign_key(recipe_id)
+  created_at
+}
+
+table(follows) {
+  primary_key(id)
+  foreign_key(follower_id)
+  foreign_key(followed_id)
+  created_at
+}
+
+table(comments) {
+  primary_key(id)
+  foreign_key(user_id)
+  foreign_key(recipe_id)
+  content
+  created_at
+  updated_at
+}
+
+table(recipe_images) {
+  primary_key(id)
+  foreign_key(recipe_id)
+  image_url
+  is_primary
+  created_at
+}
+
+' Relationships
+users ||--o{ recipes : creates
+users ||--o{ favorites : has
+users ||--o{ follows : follows
+users ||--o{ comments : writes
+users ||--o{ shopping_lists : owns
+
+recipes ||--o{ recipe_ingredients : contains
+recipes ||--o{ recipe_steps : has
+recipes ||--o{ recipe_category_mappings : belongs_to
+recipes ||--o{ recipe_images : has
+recipes ||--o{ favorites : has
+recipes ||--o{ comments : has
+recipes |o--o| recipes : cloned_from
+
+recipe_categories ||--o{ recipe_category_mappings : has
+
+ingredients ||--o{ recipe_ingredients : used_in
+ingredients ||--o{ shopping_list_items : included_in
+
+shopping_lists ||--o{ shopping_list_items : contains
+@enduml
