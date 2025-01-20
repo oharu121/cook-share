@@ -4,6 +4,18 @@
     "description": "Discover, create, and share amazing recipes with our community",
     "createButton": "Create Recipe"
   },
+  "nav": {
+    "recipes": "Recipes",
+    "create": "Create",
+    "login": "Login",
+    "signup": "Sign Up",
+    "profile": {
+      "view": "Profile",
+      "settings": "Settings",
+      "signout": "Sign Out",
+      "createRecipe": "Create Recipe"
+    }
+  },
   "sections": {
     "featured": {
       "title": "Featured Templates",
