@@ -1,29 +1,39 @@
-import type { Metadata } from "next";
-import { Inter } from 'next/font/google'
-import { languages,  } from '@/config/languages';
-import "../globals.css";
-
-const inter = Inter({ subsets: ['latin'] })
-
-export const metadata: Metadata = {
-  title: 'CookShare',
-  description: 'Create, customize, and share recipes',
-}
+import { languages } from '@/config/languages';
+import { Header } from '@/components/layout/header';
+import { checkAuthStatus } from '@/lib/auth';
+import { getDictionary } from "@/lib/dictionaries";
 
 export async function generateStaticParams() {
-  return languages.map((lang) => ({ lang }));
+  return languages.map((lang) => ({ lang }))
 }
 
-export default function RootLayout({
+export default async function LocaleLayout({
   children,
-  params
+  params,
 }: {
   children: React.ReactNode
-  params: { lang: string }
+  params: Promise<{ lang: 'en' | 'ja' }>
 }) {
+  const isAuthenticated = await checkAuthStatus();
+  const lang = languages.includes((await params).lang as any) ? (await params).lang : 'ja';
+  const dict = await getDictionary(lang);
+  
+  // Fetch user data if authenticated
+  let user;
+  if (isAuthenticated) {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/user`);
+    user = await response.json();
+  }
+
   return (
-    <html lang={params.lang}>
-      <body className={inter.className}>{children}</body>
-    </html>
-  )
+    <div lang={lang}>
+      <Header 
+        isAuthenticated={isAuthenticated} 
+        lang={lang} 
+        user={user} 
+        dict={dict}
+      />
+      {children}
+    </div>
+  );
 }

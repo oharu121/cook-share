@@ -1,0 +1,68 @@
+{
+    "hero": {
+    "title": "CookShareへようこそ",
+    "description": "コミュニティでレシピを作成、カスタマイズ、共有しましょう",
+    "createButton": "レシピを作成"
+  },
+  "nav": {
+    "recipes": "レシピ一覧",
+    "create": "作成",
+    "login": "ログイン",
+    "signup": "新規登録",
+    "profile": {
+      "view": "プロフィール",
+      "settings": "設定",
+      "signout": "ログアウト",
+      "createRecipe": "レシピを作成"
+    }
+  },
+  "sections": {
+    "featured": {
+      "title": "おすすめテンプレート",
+      "viewButton": "テンプレートを見る"
+    },
+    "popular": {
+      "title": "人気のレシピ",
+      "viewButton": "レシピを見る",
+      "cookingTime": "分",
+      "servings": "人前"
+    },
+    "categories": {
+      "title": "カテゴリーから探す"
+    }
+  },
+  "service": {
+      "title": "クックシェア",
+      "description": "コミュニティでレシピを作成、カスタマイズ、共有しましょう",
+      "createButton": "レシピを作成"
+    },
+    "navigation": {
+      "home": "ホーム",
+      "recipes": "レシピ一覧",
+      "profile": "プロフィール",
+      "settings": "設定"
+    },
+    "recipe": {
+      "difficulty": {
+        "easy": "簡単",
+        "medium": "普通",
+        "hard": "難しい"
+      },
+      "cookingTime": "調理時間",
+      "servings": "人前",
+      "ingredients": "材料",
+      "steps": "手順",
+      "category": "カテゴリー"
+    },
+    "categories": {
+      "breakfast": "朝食",
+      "lunch": "昼食",
+      "dinner": "夕食",
+      "dessert": "デザート",
+      "appetizer": "前菜",
+      "mainCourse": "メイン",
+      "vegetarian": "ベジタリアン",
+      "quickAndEasy": "簡単・時短"
+    }
+  }
+  

@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Recipe } from "@/types/recipe";
 import Link from "next/link";
 import type { Metadata } from 'next'
+import { getDictionary } from '../../lib/dictionaries'
 
 export const metadata: Metadata = {
   title: 'Home | CookShare',
@@ -23,33 +24,41 @@ type Props = {
   params: { lang: string }
 }
 
-export default async function Home({ params }: Props) {
-  // Get the language from params
-  const lang = params.lang;
+export default async function Page({ params }:  {
+  params: Promise<{ lang:  'en' | 'ja'  }>
+}) {
+  // Get the language from params and load dictionary
+  const lang = (await params).lang;
+  const dict = await getDictionary(lang);
 
   // Fetch featured recipes from the API
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_APP_URL}/api/recipes`
   );
-  console.log(response);
   const recipes: Recipe[] = await response.json();
 
   return (
     <main className="container mx-auto px-4 py-8">
       {/* Hero Section */}
       <section className="mb-12 text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to CookShare</h1>
+        <h1 className="text-4xl font-bold mb-4">
+          {dict.hero.title}
+        </h1>
         <p className="text-xl text-muted-foreground mb-6">
-          Discover, create, and share amazing recipes with our community
+          {dict.hero.description}
         </p>
         <Button asChild>
-          <Link href={`/${lang}/recipes/create`}>Create Recipe</Link>
+          <Link href={`/${lang}/recipes/create`}>
+            {dict.hero.createButton}
+          </Link>
         </Button>
       </section>
 
       {/* Featured Templates Section */}
       <section className="mb-12">
-        <h2 className="text-2xl font-semibold mb-6">Featured Templates</h2>
+        <h2 className="text-2xl font-semibold mb-6">
+          {dict.sections.featured.title}
+        </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {recipes
             .filter((recipe) => recipe.template)
@@ -61,7 +70,9 @@ export default async function Home({ params }: Props) {
                   {recipe.description}
                 </p>
                 <Button variant="outline" asChild>
-                  <Link href={`/${lang}/recipes/${recipe.id}`}>View Template</Link>
+                  <Link href={`/${lang}/recipes/${recipe.id}`}>
+                    {dict.sections.featured.viewButton}
+                  </Link>
                 </Button>
               </Card>
             ))}
@@ -70,7 +81,9 @@ export default async function Home({ params }: Props) {
 
       {/* Popular Recipes Section */}
       <section className="mb-12">
-        <h2 className="text-2xl font-semibold mb-6">Popular Recipes</h2>
+        <h2 className="text-2xl font-semibold mb-6">
+          {dict.sections.popular.title}
+        </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {recipes
             .filter((recipe) => recipe.isPublic)
@@ -83,12 +96,14 @@ export default async function Home({ params }: Props) {
                 </p>
                 <div className="flex justify-between items-center">
                   <div className="text-sm">
-                    <span>🕒 {recipe.cookingTime}min</span>
+                    <span>🕒 {recipe.cookingTime}{dict.sections.popular.cookingTime}</span>
                     <span className="mx-2">•</span>
-                    <span>👤 {recipe.servings} servings</span>
+                    <span>👤 {recipe.servings} {dict.sections.popular.servings}</span>
                   </div>
                   <Button variant="outline" asChild>
-                    <Link href={`/${lang}/recipes/${recipe.id}`}>View Recipe</Link>
+                    <Link href={`/${lang}/recipes/${recipe.id}`}>
+                      {dict.sections.popular.viewButton}
+                    </Link>
                   </Button>
                 </div>
               </Card>
@@ -98,7 +113,9 @@ export default async function Home({ params }: Props) {
 
       {/* Categories Section */}
       <section>
-        <h2 className="text-2xl font-semibold mb-6">Browse Categories</h2>
+        <h2 className="text-2xl font-semibold mb-6">
+          {dict.sections.categories.title}
+        </h2>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {categories.map((category) => (
             <Card
@@ -106,7 +123,7 @@ export default async function Home({ params }: Props) {
               className="p-4 text-center hover:bg-accent cursor-pointer"
             >
               <Link
-                href={`/recipes?category=${category.toLowerCase()}`}
+                href={`/${lang}/recipes?category=${category.toLowerCase()}`}
                 className="block"
               >
                 <h3 className="font-medium">{category}</h3>
