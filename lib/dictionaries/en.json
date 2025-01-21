@@ -4,6 +4,27 @@
     "description": "Discover, create, and share amazing recipes with our community",
     "createButton": "Create Recipe"
   },
+  "auth": {
+    "signup": {
+      "title": "Create an account",
+      "description": "Enter your details below to create your account",
+      "nameLabel": "Name",
+      "emailLabel": "Email",
+      "passwordLabel": "Password",
+      "submitButton": "Sign up",
+      "loginLink": "Already have an account? Sign in",
+      "loading": "Creating account..."
+    },
+    "login": {
+      "title": "Welcome back",
+      "description": "Enter your email to sign in to your account",
+      "emailLabel": "Email",
+      "passwordLabel": "Password",
+      "submitButton": "Sign In",
+      "registerLink": "Don't have an account? Sign up",
+      "loading": "Signing in..."
+    }
+  },
   "nav": {
     "recipes": "Recipes",
     "create": "Create",

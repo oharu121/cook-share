@@ -4,6 +4,27 @@
     "description": "コミュニティでレシピを作成、カスタマイズ、共有しましょう",
     "createButton": "レシピを作成"
   },
+  "auth": {
+    "signup": {
+      "title": "アカウント作成",
+      "description": "以下の情報を入力してアカウントを作成してください",
+      "nameLabel": "名前",
+      "emailLabel": "メールアドレス",
+      "passwordLabel": "パスワード",
+      "submitButton": "登録",
+      "loginLink": "既にアカウントをお持ちの方はこちら",
+      "loading": "アカウント作成中..."
+    },
+    "login": {
+      "title": "おかえりなさい",
+      "description": "メールアドレスを入力してログインしてください",
+      "emailLabel": "メールアドレス",
+      "passwordLabel": "パスワード",
+      "submitButton": "ログイン",
+      "registerLink": "アカウントをお持ちでない方は新規登録",
+      "loading": "ログイン中..."
+    }
+  },
   "nav": {
     "recipes": "レシピ一覧",
     "create": "作成",

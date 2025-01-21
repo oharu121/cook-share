@@ -2,9 +2,14 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { match } from '@formatjs/intl-localematcher';
 import Negotiator from 'negotiator';
+import { verify } from 'jsonwebtoken';
 
 let locales = ['en', 'ja'];
 let defaultLocale = 'ja';
+
+// Define protected and public routes
+const protectedRoutes = ['/dashboard', '/profile'];
+const authRoutes = ['/login', '/register'];
 
 function getLocale(request: NextRequest): string {
   const negotiatorHeaders: Record<string, string> = {};
@@ -14,7 +19,25 @@ function getLocale(request: NextRequest): string {
   return match(languages, locales, defaultLocale);
 }
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
+  const token = request.cookies.get('session')?.value;
+  const path = request.nextUrl.pathname;
+
+  // Verify session
+  const verifiedToken = token 
+    ? verify(token, process.env.JWT_SECRET || 'your-secret-key')
+    : null;
+
+  // Redirect authenticated users away from auth routes
+  if (verifiedToken && authRoutes.includes(path)) {
+    return NextResponse.redirect(new URL('/dashboard', request.url));
+  }
+
+  // Redirect unauthenticated users away from protected routes
+  if (!verifiedToken && protectedRoutes.includes(path)) {
+    return NextResponse.redirect(new URL('/login', request.url));
+  }
+
   const { pathname } = request.nextUrl
   const pathnameIsMissingLocale = locales.every(
     (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
@@ -59,6 +82,13 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api (API routes)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     */
     '/((?!api|_next/static|_next/image|favicon.ico).*)',
   ],
 };

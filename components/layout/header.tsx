@@ -58,7 +58,7 @@ export function Header({ isAuthenticated, lang, user, dict }: HeaderProps) {
                 <Link href={`/${lang}/login`}>
                   <Button variant="ghost">{dict.nav.login}</Button>
                 </Link>
-                <Link href={`/${lang}/register`}>
+                <Link href={`/${lang}/signup`}>
                   <Button>{dict.nav.signup}</Button>
                 </Link>
               </>
