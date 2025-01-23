@@ -1,5 +1,5 @@
 import { SignupForm } from "@/components/auth/signup-form";
-import { getDictionary } from "@/lib/dictionaries";
+import { getDictionary } from "@/config/dictionaries";
 
 export default async function SignupPage({ params }:  {
     params: Promise<{ lang: 'en' | 'ja' }>

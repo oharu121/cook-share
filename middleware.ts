@@ -1,55 +1,57 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
+import { NextResponse, NextRequest } from 'next/server';
 import { match } from '@formatjs/intl-localematcher';
+import { verifySession } from '@/server/lib/session';
 import Negotiator from 'negotiator';
-import { verify } from 'jsonwebtoken';
 
 let locales = ['en', 'ja'];
 let defaultLocale = 'ja';
 
 // Define protected and public routes
 const protectedRoutes = ['/dashboard', '/profile'];
-const authRoutes = ['/login', '/register'];
+const publicRoutes = ['/login', '/register', '/'];
 
-function getLocale(request: NextRequest): string {
+function getLocale(req: NextRequest): string {
   const negotiatorHeaders: Record<string, string> = {};
-  request.headers.forEach((value, key) => (negotiatorHeaders[key] = value));
+  req.headers.forEach((value, key) => (negotiatorHeaders[key] = value));
 
   const languages = new Negotiator({ headers: negotiatorHeaders }).languages();
   return match(languages, locales, defaultLocale);
 }
 
-export async function middleware(request: NextRequest) {
-  const token = request.cookies.get('session')?.value;
-  const path = request.nextUrl.pathname;
+export async function middleware(req: NextRequest) {
+  const path = req.nextUrl.pathname;
+  const isProtectedRoute = protectedRoutes.includes(path)
+  const isPublicRoute = publicRoutes.includes(path)
 
   // Verify session
-  const verifiedToken = token 
-    ? verify(token, process.env.JWT_SECRET || 'your-secret-key')
-    : null;
+  const session = await verifySession();
 
   // Redirect authenticated users away from auth routes
-  if (verifiedToken && authRoutes.includes(path)) {
-    return NextResponse.redirect(new URL('/dashboard', request.url));
+  if (isProtectedRoute && !session?.id) {
+    return NextResponse.redirect(new URL('/login', req.nextUrl))
   }
 
   // Redirect unauthenticated users away from protected routes
-  if (!verifiedToken && protectedRoutes.includes(path)) {
-    return NextResponse.redirect(new URL('/login', request.url));
+  if (
+    isPublicRoute &&
+    session?.id &&
+    !req.nextUrl.pathname.startsWith('/dashboard')
+  ) {
+    return NextResponse.redirect(new URL('/profile', req.nextUrl))
   }
 
-  const { pathname } = request.nextUrl
+  const { pathname } = req.nextUrl
   const pathnameIsMissingLocale = locales.every(
     (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
   );
 
   // Redirect if there is no locale
   if (pathnameIsMissingLocale) {
-    const locale = getLocale(request);
+    const locale = getLocale(req);
     return NextResponse.redirect(
       new URL(
         `/${locale}${pathname.startsWith('/') ? '' : '/'}${pathname}`,
-        request.url
+        req.url
       )
     );
   }
@@ -73,7 +75,7 @@ export async function middleware(request: NextRequest) {
     'Permissions-Policy',
     'camera=(), microphone=(), geolocation=()'
   );
-  
+
   response.headers.set('X-Frame-Options', 'DENY');
   response.headers.set('X-Content-Type-Options', 'nosniff');
 

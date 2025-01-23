@@ -1,6 +1,6 @@
 import { Metadata } from "next";
-import { getDictionary } from "@/lib/dictionaries";
 import { LoginForm } from "@/components/auth/login-form";
+import { getDictionary } from "@/config/dictionaries";
 
 export const metadata: Metadata = {
   title: "Login",

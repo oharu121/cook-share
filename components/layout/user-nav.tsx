@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
+import { LogoutMenuItem } from "./logout-menu-item";
 
 interface UserNavProps {
   user: {
@@ -61,9 +62,7 @@ export function UserNav({ user, lang, dict }: UserNavProps) {
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="text-red-600">
-          {dict.nav.profile.signout}
-        </DropdownMenuItem>
+        <LogoutMenuItem label={dict.nav.profile.signout} />
       </DropdownMenuContent>
     </DropdownMenu>
   );

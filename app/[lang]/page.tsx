@@ -3,7 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Recipe } from "@/types/recipe";
 import Link from "next/link";
 import type { Metadata } from 'next'
-import { getDictionary } from '../../lib/dictionaries'
+import { getDictionary } from "@/config/dictionaries";
 
 export const metadata: Metadata = {
   title: 'Home | CookShare',

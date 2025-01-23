@@ -7,8 +7,8 @@ import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-import { cn } from "@/lib/utils";
-import { userAuthSchema } from "@/lib/validations/auth";
+import { cn } from "@/server/lib/utils";
+import { userAuthSchema } from "@/client/lib/validations/auth";
 import { Button } from "@/components/ui/button";
 import {
   Form,

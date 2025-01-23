@@ -3,7 +3,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Step, Ingredient } from "@/types/recipe";
-import { detectIngredients } from "@/lib/ingredientDetection";
+import { detectIngredients } from "@/server/lib/ingredientDetection";
 
 interface StepEditorProps {
   step: Step;

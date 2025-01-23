@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { writeFile } from "fs/promises";
 import { join } from "path";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/lib/auth";
+import { authOptions } from "@/server/lib/auth";
 
 export async function POST(request: Request) {
   try {

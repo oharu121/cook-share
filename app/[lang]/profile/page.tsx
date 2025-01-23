@@ -1,30 +1,18 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import Link from "next/link";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
-
-async function getUserProfile() {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/user`);
-  if (!response.ok) {
-    throw new Error("Failed to fetch user profile");
-  }
-  return response.json();
-}
-
-async function getUserRecipes() {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_APP_URL}/api/recipes/user`
-  );
-  if (!response.ok) {
-    throw new Error("Failed to fetch user recipes");
-  }
-  return response.json();
-}
+import { Preferences } from "@/components/profile/preferences";
+import { getUser } from "@/server/dal/user";
+import {  getUserRecipes } from "@/server/dal/recipe";
+import { redirect } from "next/navigation";
 
 export default async function ProfilePage() {
-  const user = await getUserProfile();
-  const recipes = await getUserRecipes();
+  const user = await getUser();
+  if (!user) {
+    redirect('/login');
+  }
+
+  const recipes = await getUserRecipes() || [];
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -136,32 +124,11 @@ export default async function ProfilePage() {
         </section>
       </div>
 
-      <div className="flex gap-4 mt-4">
-        <div className="flex items-center gap-2">
-          <Switch
-            checked={user.defaultPublic}
-            onCheckedChange={updatePreference}
-            id="defaultPublic"
-          />
-          <Label htmlFor="defaultPublic">Default Public Recipes</Label>
-        </div>
-        <div className="flex items-center gap-2">
-          <Switch
-            checked={user.emailNotifications}
-            onCheckedChange={updatePreference}
-            id="emailNotifications"
-          />
-          <Label htmlFor="emailNotifications">Email Notifications</Label>
-        </div>
-        <div className="flex items-center gap-2">
-          <Switch
-            checked={user.darkMode}
-            onCheckedChange={updatePreference}
-            id="darkMode"
-          />
-          <Label htmlFor="darkMode">Dark Mode</Label>
-        </div>
-      </div>
+      <Preferences 
+        defaultPublic={user.defaultPublic}
+        emailNotifications={user.emailNotifications}
+        darkMode={user.darkMode}
+      />
     </div>
   );
 }
