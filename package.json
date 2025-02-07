@@ -7,6 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "docker:build": "docker build --build-arg DATABASE_URL=$DATABASE_URL -t cook-share .",
+    "docker:run": "docker run --env-file .env -p 3000:3000 cook-share",
     "pretty": "prettier --write .",
     "db:open": "npx prisma studio",
     "db:seed": "ts-node prisma/seed.ts",
