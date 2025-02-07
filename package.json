@@ -1,10 +1,13 @@
 {
   "name": "cook-share",
   "version": "0.1.0",
+  "npmConfig": {
+    "legacy-peer-deps": true
+  },
   "private": true,
   "scripts": {
     "dev": "start http://localhost:3000 && next dev --turbopack",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
     "docker:build": "docker build --build-arg DATABASE_URL=$DATABASE_URL -t cook-share .",
