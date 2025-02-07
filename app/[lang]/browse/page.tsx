@@ -33,7 +33,7 @@ export default async function BrowsePage({
 
   // Fetch featured recipes from the API
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_APP_URL}/api/recipes`,
+    `/api/recipes`,
   );
   const recipes: Recipe[] = await response.json();
 

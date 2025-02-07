@@ -8,7 +8,7 @@ import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 
 async function getUserProfile() {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/user`);
+  const response = await fetch(`/api/user`);
   if (!response.ok) {
     throw new Error("Failed to fetch user profile");
   }
