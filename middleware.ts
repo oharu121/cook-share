@@ -17,18 +17,30 @@ const publicRoutes = ["/login", "/register", "/", "/browse"];
 
 function getLocale(req: NextRequest): string {
   const path = req.nextUrl.pathname;
+  const localeMatch = path.split("/")[1];
 
-  // Try to extract the locale from the first path segment
-  const localeMatch = path.split("/")[1]; // e.g., "/en/recipes" -> "en"
   if (locales.includes(localeMatch)) {
-    return localeMatch; // Return if it's a valid locale
+    return localeMatch;
   }
 
   const negotiatorHeaders: Record<string, string> = {};
   req.headers.forEach((value, key) => (negotiatorHeaders[key] = value));
 
-  const languages = new Negotiator({ headers: negotiatorHeaders }).languages();
-  return match(languages, locales, defaultLocale);
+  let languages = new Negotiator({ headers: negotiatorHeaders }).languages();
+  console.log("Languages detected:", languages);
+
+  // Ensure languages array is valid
+  if (!languages || languages.length === 0) {
+    console.warn("No valid language detected, using default:", defaultLocale);
+    return defaultLocale;
+  }
+
+  try {
+    return match(languages, locales, defaultLocale);
+  } catch (error) {
+    console.error("Locale matching error:", error);
+    return defaultLocale;
+  }
 }
 
 export async function middleware(req: NextRequest) {
