@@ -1,7 +1,7 @@
 import { cache } from "react";
 import { verifySession } from "../lib/session";
 import { prisma } from "@/server/db";
-import { toRecipeDTO, toRecipeListDTO } from "../dto/recipe.dto";
+import { recipeSelect, toRecipeDTO, toRecipeListDTO } from "../dto/recipe.dto";
 import { Prisma } from "@prisma/client";
 import { RecipeCategory } from "@/types/recipe";
 
@@ -27,6 +27,17 @@ export const getUserRecipes = cache(async () => {
     return null;
   }
 });
+
+export const getAllRecipes = async () => {
+  const recipes = await prisma.recipe.findMany({
+      select: recipeSelect,
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+    
+  return toRecipeListDTO(recipes);
+};
 
 export async function getRecipe(id: string) {
   const recipe = await prisma.recipe.findUnique({

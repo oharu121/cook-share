@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/select";
 import Link from "next/link";
 import { getDictionary } from "@/config/dictionaries";
+import { getUserRecipes } from "@/server/dal/recipe";
 
 export default async function RecipesPage({
   searchParams,
@@ -23,11 +24,7 @@ export default async function RecipesPage({
   const paramsResolved = await searchParams;
   const { lang } = await params;
   const dict = await getDictionary(lang);
-
-  const response = await fetch(
-    `/api/recipes`,
-  );
-  const recipes = await response.json();
+  const recipes = await getUserRecipes();
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -72,7 +69,7 @@ export default async function RecipesPage({
 
       {/* Recipe Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {recipes.map(
+        {recipes?.map(
           (
             recipe: any, // eslint-disable-line @typescript-eslint/no-explicit-any
           ) => (
