@@ -25,7 +25,7 @@ export default async function RecipesPage({
   const dict = await getDictionary(lang);
 
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_APP_URL}/api/recipes`,
+    `/api/recipes`,
   );
   const recipes = await response.json();
 
