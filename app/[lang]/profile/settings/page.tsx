@@ -6,17 +6,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
-
-async function getUserProfile() {
-  const response = await fetch(`/api/user`);
-  if (!response.ok) {
-    throw new Error("Failed to fetch user profile");
-  }
-  return response.json();
-}
+import { getUser } from "@/server/dal/user";
 
 export default async function SettingsPage() {
-  const user = await getUserProfile();
+  const user = await getUser();
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -29,15 +22,15 @@ export default async function SettingsPage() {
           <div className="space-y-4">
             <div>
               <Label htmlFor="name">Name</Label>
-              <Input id="name" defaultValue={user.name} />
+              <Input id="name" defaultValue={user?.name || ""} />
             </div>
             <div>
               <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" defaultValue={user.email} />
+              <Input id="email" type="email" defaultValue={user?.email || ""} />
             </div>
             <div>
               <Label htmlFor="bio">Bio</Label>
-              <Input id="bio" defaultValue={user.bio} />
+              <Input id="bio" defaultValue={user?.bio || ""} />
             </div>
             <Button>Save Profile</Button>
           </div>
@@ -54,7 +47,7 @@ export default async function SettingsPage() {
                   Make your recipes public by default
                 </p>
               </div>
-              <Switch defaultChecked={user.defaultPublic} />
+              <Switch defaultChecked={user?.defaultPublic || false} />
             </div>
             <Separator />
             <div className="flex items-center justify-between">
@@ -64,7 +57,7 @@ export default async function SettingsPage() {
                   Receive updates about your recipes
                 </p>
               </div>
-              <Switch defaultChecked={user.emailNotifications} />
+              <Switch defaultChecked={user?.emailNotifications || false } />
             </div>
             <Separator />
             <div className="flex items-center justify-between">
@@ -74,7 +67,7 @@ export default async function SettingsPage() {
                   Toggle dark mode theme
                 </p>
               </div>
-              <Switch defaultChecked={user.darkMode} />
+                <Switch defaultChecked={user?.darkMode || false} />
             </div>
           </div>
         </Card>

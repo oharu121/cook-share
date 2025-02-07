@@ -1,7 +1,8 @@
-import type { Prisma } from "@prisma/client";
+import type { Ingredient, Prisma } from "@prisma/client";
 import { cache } from "react";
 import { getUser } from "../dal/user";
 import { userSelect } from "./user.dto";
+import { Step, SubRecipe } from "@/types/recipe";
 
 // Define the select type for consistent recipe queries
 export const recipeSelect = {
@@ -18,7 +19,9 @@ export const recipeSelect = {
   template: true,
   tags: true,
   createdAt: true,
+  updatedAt: true,
   createdBy: true,
+  subRecipes: true,
   user: {
     select: {
       id: true,
@@ -42,8 +45,8 @@ export type RecipeDTO = {
   id: string;
   title: string;
   description: string;
-  ingredients: Prisma.JsonValue;
-  steps: Prisma.JsonValue;
+  ingredients: Ingredient[];
+  steps: Step[];
   cookingTime: number;
   servings: number;
   difficulty: string;
@@ -52,6 +55,9 @@ export type RecipeDTO = {
   template: boolean;
   tags: string[];
   createdAt: Date;
+  updatedAt: Date;
+  createdBy: string;
+  subRecipes: SubRecipe[];
   author: {
     id: string;
     name: string | null;
@@ -81,8 +87,8 @@ export const toRecipeDTO = cache(
       id: recipe.id,
       title: recipe.title,
       description: recipe.description,
-      ingredients: recipe.ingredients,
-      steps: recipe.steps,
+      ingredients: recipe.ingredients as unknown as Ingredient[],
+      steps: recipe.steps as unknown as Step[],
       cookingTime: recipe.cookingTime,
       servings: recipe.servings,
       difficulty: recipe.difficulty,
@@ -90,7 +96,10 @@ export const toRecipeDTO = cache(
       isPublic: recipe.isPublic,
       template: recipe.template,
       tags: recipe.tags || [],
+      createdBy: recipe.createdBy,
       createdAt: recipe.createdAt,
+      updatedAt: recipe.updatedAt,
+      subRecipes: recipe.subRecipes as unknown as SubRecipe[],
       author: recipe.user
         ? {
             id: recipe.user.id,

@@ -10,6 +10,7 @@ export const userSelect = {
   defaultPublic: true,
   emailNotifications: true,
   darkMode: true,
+  bio: true,
 } as const;
 
 // Infer the return type from the select
@@ -25,6 +26,7 @@ export type UserDTO = {
     darkMode: boolean;
     emailNotifications: boolean;
   };
+  bio: string | null;
 };
 
 // Permission checks
@@ -45,5 +47,6 @@ export const toUserDTO = cache(async (user: UserSelect): Promise<UserDTO> => {
       darkMode: user.darkMode,
       emailNotifications: user.emailNotifications,
     },
+    bio: user.bio,
   };
 });

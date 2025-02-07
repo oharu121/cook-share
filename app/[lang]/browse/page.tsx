@@ -2,10 +2,10 @@ export const dynamic = "force-dynamic";
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Recipe } from "@/types/recipe";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { getDictionary } from "@/config/dictionaries";
+import { getAllRecipes } from "@/server/dal/recipe";
 
 export const metadata: Metadata = {
   title: "Home | CookShare",
@@ -32,10 +32,8 @@ export default async function BrowsePage({
   const dict = await getDictionary(lang);
 
   // Fetch featured recipes from the API
-  const response = await fetch(
-    `/api/recipes`,
-  );
-  const recipes: Recipe[] = await response.json();
+  
+  const recipes = await getAllRecipes();
 
   return (
     <main className="container mx-auto px-4 py-8">
