@@ -1,4 +1,9 @@
-import { User } from "./user";
+export type RecipeCategory =
+  | "Breakfast"
+  | "Lunch"
+  | "Dinner"
+  | "Dessert"
+  | "Appetizer";
 
 export interface Recipe {
   id: string;
@@ -8,8 +13,8 @@ export interface Recipe {
   steps: Step[];
   cookingTime: number;
   servings: number;
-  difficulty: "easy" | "medium" | "hard";
-  category?: string;
+  difficulty: string;
+  category?: RecipeCategory;
   isPublic: boolean;
   template: boolean;
   clonedFrom?: string;
@@ -25,7 +30,14 @@ export interface Ingredient {
   id: string;
   name: string;
   amount: number;
-  unit: string;
+  units: Unit[];
+  unit?: string; // Selected unit
+}
+
+export interface Unit {
+  id: string;
+  name: string;
+  abbreviation?: string;
 }
 
 export interface Step {
@@ -43,9 +55,16 @@ export interface SubRecipe {
   steps: Step[];
 }
 
-export interface IngredientMaster {
+export interface User {
   id: string;
-  name: string;
-  allowedUnits: string[];
-  commonNames: string[]; // For partial search
+  name: string | null;
+  email: string;
+  defaultPublic: boolean;
+  emailNotifications: boolean;
+  darkMode: boolean;
+  // Add optional fields if needed
+  password?: string | null;
+  bio?: string | null;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

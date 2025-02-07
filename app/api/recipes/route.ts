@@ -1,7 +1,11 @@
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/lib/auth";
+import { verifySession } from "@/server/lib/session";
+import {
+  recipeSelect,
+  toRecipeDTO,
+  toRecipeListDTO,
+} from "@/server/dto/recipe.dto";
+import { Prisma, PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -14,7 +18,7 @@ export async function GET(request: Request) {
     const search = searchParams.get("search");
     const filter = searchParams.get("filter");
 
-    let where: any = {
+    let where: Prisma.RecipeWhereInput = {
       OR: [{ isPublic: true }, { template: true }],
     };
 
@@ -46,60 +50,57 @@ export async function GET(request: Request) {
 
     const recipes = await prisma.recipe.findMany({
       where,
-      include: {
-        user: {
-          select: {
-            name: true,
-            email: true,
-          },
-        },
-      },
+      select: recipeSelect,
       orderBy: {
         createdAt: "desc",
       },
     });
 
-    return NextResponse.json(recipes);
+    const recipeDTOs = await toRecipeListDTO(recipes);
+    return NextResponse.json(recipeDTOs);
   } catch (error) {
     console.error("Failed to fetch recipes:", error);
     return NextResponse.json(
       { error: "Failed to fetch recipes" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
 
 export async function POST(request: Request) {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session?.user) {
+    const session = await verifySession();
+    if (!session?.id) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const data = await request.json();
+
     const recipe = await prisma.recipe.create({
       data: {
         ...data,
-        createdBy: session.user.id,
+        createdBy: session.id,
         ingredients: JSON.stringify(data.ingredients),
         steps: JSON.stringify(data.steps),
+        user: { connect: { id: session.id } },
       },
-      include: {
-        user: {
-          select: {
-            name: true,
-            email: true,
-          },
-        },
-      },
+      select: recipeSelect,
     });
 
-    return NextResponse.json(recipe);
+    const recipeDTO = await toRecipeDTO(recipe);
+    if (!recipeDTO) {
+      return NextResponse.json(
+        { error: "Failed to process recipe" },
+        { status: 500 },
+      );
+    }
+
+    return NextResponse.json(recipeDTO);
   } catch (error) {
     console.error("Failed to create recipe:", error);
     return NextResponse.json(
       { error: "Failed to create recipe" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

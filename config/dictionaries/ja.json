@@ -1,0 +1,232 @@
+{
+  "landingPage": {
+    "heroTitle": "CookShareへようこそ",
+    "heroDescription": "レシピを作成、カスタマイズ、共有しましょう。",
+    "registerButton": "今すぐ登録",
+    "featuresTitle": "私たちを選ぶ理由",
+    "features": [
+      {
+        "title": "使いやすい",
+        "description": "私たちのプラットフォームは使いやすく、ナビゲートが簡単です。"
+      },
+      {
+        "title": "カスタマイズ可能なレシピ",
+        "description": "お好みや食事制限に合わせてレシピを調整できます。"
+      },
+      {
+        "title": "コミュニティ主導",
+        "description": "食の愛好家のコミュニティに参加しましょう。"
+      }
+    ],
+    "ctaTitle": "今すぐ参加",
+    "ctaDescription": "今すぐ登録して、CookShareで料理の旅を始めましょう。"
+  },
+  "buttons": {
+    "editRecipe": "レシピを編集",
+    "clone": "クローン",
+    "addToShoppingList": "買い物リストに追加",
+    "cancel": "キャンセル",
+    "adding": "追加中...",
+    "save": "保存"
+  },
+  "dialogs": {
+    "selectOrCreateList": "買い物リストを選択または作成",
+    "orCreateNewList": "または新しいリストを作成:"
+  },
+  "placeholders": {
+    "newListName": "新しい買い物リストの名前"
+  },
+  "labels": {
+    "cookingTime": "調理時間",
+    "servings": "分量",
+    "difficulty": "難易度"
+  },
+  "errors": {
+    "recipeNotFound": "レシピが見つかりません"
+  },
+  "recipesPage": {
+    "title": "レシピ",
+    "createButton": "レシピを作成",
+    "searchPlaceholder": "レシピを検索...",
+    "difficultyPlaceholder": "難易度を選択",
+    "timePlaceholder": "調理時間を選択",
+    "by": "作成者",
+    "anonymous": "匿名",
+    "viewRecipe": "レシピを見る",
+    "useTemplate": "テンプレートを使用"
+  },
+  "difficulty": {
+    "easy": "簡単",
+    "medium": "中級",
+    "hard": "難しい"
+  },
+  "time": {
+    "under15": "15分以内",
+    "under30": "30分以内",
+    "under60": "60分以内",
+    "over60": "60分以上"
+  },
+  "units": {
+    "minutes": "分",
+    "servings": "人前",
+    "people": "人"
+  },
+  "hero": {
+    "title": "CookShareへようこそ",
+    "description": "コミュニティでレシピを作成、カスタマイズ、共有しましょう",
+    "createButton": "レシピを作成"
+  },
+  "notFound": {
+    "title": "404",
+    "subtitle": "ページが見つかりませんでした",
+    "description": "申し訳ありませんが、お探しのページは存在しないか、移動した可能性があります。",
+    "returnHome": "ホームに戻る"
+  },
+  "auth": {
+    "signup": {
+      "title": "アカウント作成",
+      "description": "以下の情報を入力してアカウントを作成してください",
+      "nameLabel": "名前",
+      "emailLabel": "メールアドレス",
+      "passwordLabel": "パスワード",
+      "submitButton": "登録",
+      "loginLink": "既にアカウントをお持ちの方はこちら",
+      "loading": "アカウント作成中..."
+    },
+    "login": {
+      "title": "おかえりなさい",
+      "description": "メールアドレスを入力してログインしてください",
+      "emailLabel": "メールアドレス",
+      "passwordLabel": "パスワード",
+      "submitButton": "ログイン",
+      "registerLink": "アカウントをお持ちでない方は新規登録",
+      "loading": "ログイン中..."
+    }
+  },
+  "nav": {
+    "recipes": "レシピ一覧",
+    "shoppingLists": "買い物リスト",
+    "browse": "レシピを探す",
+    "create": "作成",
+    "login": "ログイン",
+    "signup": "新規登録",
+    "profile": {
+      "view": "プロフィール",
+      "settings": "設定",
+      "signout": "ログアウト",
+      "createRecipe": "レシピを作成"
+    }
+  },
+  "sections": {
+    "ingredients": "材料",
+    "instructions": "手順",
+    "featured": {
+      "title": "おすすめテンプレート",
+      "viewButton": "テンプレートを見る"
+    },
+    "popular": {
+      "title": "人気のレシピ",
+      "viewButton": "レシピを見る",
+      "cookingTime": "分",
+      "servings": "人前"
+    },
+    "categories": {
+      "title": "カテゴリーから探す"
+    }
+  },
+  "service": {
+    "title": "クックシェア",
+    "description": "コミュニティでレシピを作成、カスタマイズ、共有しましょう",
+    "createButton": "レシピを作成"
+  },
+  "navigation": {
+    "home": "ホーム",
+    "recipes": "レシピ一覧",
+    "profile": "プロフィール",
+    "settings": "設定"
+  },
+  "recipe": {
+    "difficulty": {
+      "easy": "簡単",
+      "medium": "普通",
+      "hard": "難しい"
+    },
+    "cookingTime": "調理時間",
+    "servings": "人前",
+    "ingredients": "材料",
+    "steps": "手順",
+    "category": "カテゴリー"
+  },
+  "categories": {
+    "breakfast": "朝食",
+    "lunch": "昼食",
+    "dinner": "夕食",
+    "dessert": "デザート",
+    "appetizer": "前菜",
+    "mainCourse": "メイン",
+    "vegetarian": "ベジタリアン",
+    "quickAndEasy": "簡単・時短"
+  },
+  "recipes": {
+    "create": "レシピを作成",
+    "edit": "レシピを編集",
+    "basicInfo": {
+      "title": "基本情報",
+      "titleLabel": "タイトル",
+      "description": "説明",
+      "tags": "タグ",
+      "addTag": "タグを追加"
+    },
+    "ingredients": {
+      "title": "材料",
+      "addButton": "材料を追加",
+      "searchPlaceholder": "材料を検索..."
+    },
+    "steps": {
+      "title": "手順",
+      "addButton": "手順を追加"
+    },
+    "details": {
+      "title": "レシピの詳細",
+      "cookingTime": "調理時間（分）",
+      "servings": "人前",
+      "difficulty": "難易度"
+    },
+    "publishing": {
+      "title": "公開設定",
+      "isPublic": "このレシピを公開する",
+      "isTemplate": "テンプレートとして保存"
+    },
+    "category": {
+      "title": "カテゴリー",
+      "placeholder": "カテゴリーを選択"
+    },
+    "submit": "レシピを作成",
+    "cancel": "キャンセル"
+  },
+  "shoppingLists": {
+    "title": "買い物リスト",
+    "newListNamePlaceholder": "新しい買い物リストの名前",
+    "createNewListButton": "新しいリストを作成",
+    "viewButton": "見る",
+    "deleteButton": "削除",
+    "ingredients": "材料",
+    "recipesInThisList": "このリストのレシピ"
+  },
+  "profile": {
+    "editProfile": "プロフィールを編集",
+    "totalRecipes": "レシピの総数",
+    "publicRecipes": "公開レシピ",
+    "templates": "テンプレート",
+    "viewAll": "すべて見る",
+    "use": "使用",
+    "minutes": "分",
+    "recentRecipes": "最近のレシピ",
+    "recipesInThisList": "このリストのレシピ",
+    "view": "見る",
+    "shoppingLists": "買い物リスト",
+    "darkMode": "ダークモード",
+    "defaultPublicRecipes": "デフォルト公開レシピ",
+    "emailNotifications": "メール通知"
+  }
+}

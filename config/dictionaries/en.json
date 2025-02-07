@@ -1,0 +1,232 @@
+{
+  "landingPage": {
+    "heroTitle": "Welcome to CookShare",
+    "heroDescription": "Create, customize, and share recipes with our community.",
+    "registerButton": "Register Now",
+    "featuresTitle": "Why Choose Us?",
+    "features": [
+      {
+        "title": "Easy to Use",
+        "description": "Our platform is user-friendly and easy to navigate."
+      },
+      {
+        "title": "Customizable Recipes",
+        "description": "Tailor recipes to your taste and dietary needs."
+      },
+      {
+        "title": "Community Driven",
+        "description": "Join a community of food enthusiasts."
+      }
+    ],
+    "ctaTitle": "Join Us Today",
+    "ctaDescription": "Sign up now and start your culinary journey with CookShare."
+  },
+  "buttons": {
+    "editRecipe": "Edit Recipe",
+    "clone": "Clone",
+    "addToShoppingList": "Add to Shopping List",
+    "cancel": "Cancel",
+    "adding": "Adding...",
+    "save": "Save"
+  },
+  "dialogs": {
+    "selectOrCreateList": "Select or Create a Shopping List",
+    "orCreateNewList": "Or create a new list:"
+  },
+  "placeholders": {
+    "newListName": "New shopping list name"
+  },
+  "labels": {
+    "cookingTime": "Cooking Time",
+    "servings": "Servings",
+    "difficulty": "Difficulty"
+  },
+  "errors": {
+    "recipeNotFound": "Recipe not found"
+  },
+  "recipesPage": {
+    "title": "Recipes",
+    "createButton": "Create Recipe",
+    "searchPlaceholder": "Search recipes...",
+    "difficultyPlaceholder": "Select difficulty",
+    "timePlaceholder": "Select cooking time",
+    "by": "By",
+    "anonymous": "Anonymous",
+    "viewRecipe": "View Recipe",
+    "useTemplate": "Use Template"
+  },
+  "difficulty": {
+    "easy": "Easy",
+    "medium": "Medium",
+    "hard": "Hard"
+  },
+  "time": {
+    "under15": "Under 15 minutes",
+    "under30": "Under 30 minutes",
+    "under60": "Under 60 minutes",
+    "over60": "Over 60 minutes"
+  },
+  "units": {
+    "minutes": "minutes",
+    "servings": "servings",
+    "people": "people"
+  },
+  "hero": {
+    "title": "Welcome to CookShare",
+    "description": "Discover, create, and share amazing recipes with our community",
+    "createButton": "Create Recipe"
+  },
+  "notFound": {
+    "title": "404",
+    "subtitle": "Page not found",
+    "description": "Sorry, the page you are looking for doesn't exist or has been moved.",
+    "returnHome": "Return Home"
+  },
+  "auth": {
+    "signup": {
+      "title": "Create an account",
+      "description": "Enter your details below to create your account",
+      "nameLabel": "Name",
+      "emailLabel": "Email",
+      "passwordLabel": "Password",
+      "submitButton": "Sign up",
+      "loginLink": "Already have an account? Sign in",
+      "loading": "Creating account..."
+    },
+    "login": {
+      "title": "Welcome back",
+      "description": "Enter your email to sign in to your account",
+      "emailLabel": "Email",
+      "passwordLabel": "Password",
+      "submitButton": "Sign In",
+      "registerLink": "Don't have an account? Sign up",
+      "loading": "Signing in..."
+    }
+  },
+  "nav": {
+    "recipes": "Recipes",
+    "browse": "Browse",
+    "create": "Create",
+    "login": "Login",
+    "signup": "Sign Up",
+    "shoppingLists": "Shopping Lists",
+    "profile": {
+      "view": "Profile",
+      "settings": "Settings",
+      "signout": "Sign Out",
+      "createRecipe": "Create Recipe"
+    }
+  },
+  "sections": {
+    "featured": {
+      "title": "Featured Templates",
+      "viewButton": "View Template"
+    },
+    "popular": {
+      "title": "Popular Recipes",
+      "viewButton": "View Recipe",
+      "cookingTime": "min",
+      "servings": "servings"
+    },
+    "categories": {
+      "title": "Browse Categories"
+    },
+    "ingredients": "Ingredients",
+    "instructions": "Instructions"
+  },
+  "service": {
+    "title": "CookShare",
+    "description": "Create, customize, and share recipes with our community",
+    "createButton": "Create Recipe"
+  },
+  "navigation": {
+    "home": "Home",
+    "recipes": "Recipes",
+    "profile": "Profile",
+    "settings": "Settings"
+  },
+  "recipe": {
+    "difficulty": {
+      "easy": "Easy",
+      "medium": "Medium",
+      "hard": "Hard"
+    },
+    "cookingTime": "Cooking Time",
+    "servings": "Servings",
+    "ingredients": "Ingredients",
+    "steps": "Steps",
+    "category": "Category"
+  },
+  "categories": {
+    "breakfast": "Breakfast",
+    "lunch": "Lunch",
+    "dinner": "Dinner",
+    "dessert": "Dessert",
+    "appetizer": "Appetizer",
+    "mainCourse": "Main Course",
+    "vegetarian": "Vegetarian",
+    "quickAndEasy": "Quick & Easy"
+  },
+  "recipes": {
+    "edit": "Edit Recipe",
+    "create": "Create New Recipe",
+    "basicInfo": {
+      "title": "Basic Information",
+      "titleLabel": "Title",
+      "description": "Description",
+      "tags": "Tags",
+      "addTag": "Add Tag"
+    },
+    "ingredients": {
+      "title": "Ingredients",
+      "addButton": "Add Ingredient",
+      "searchPlaceholder": "Search ingredients..."
+    },
+    "steps": {
+      "title": "Steps",
+      "addButton": "Add Step"
+    },
+    "details": {
+      "title": "Recipe Details",
+      "cookingTime": "Cooking Time (minutes)",
+      "servings": "Servings",
+      "difficulty": "Difficulty"
+    },
+    "publishing": {
+      "title": "Publishing Options",
+      "isPublic": "Make this recipe public",
+      "isTemplate": "Save as template"
+    },
+    "category": {
+      "title": "Category",
+      "placeholder": "Select category"
+    },
+    "submit": "Create Recipe",
+    "cancel": "Cancel"
+  },
+  "shoppingLists": {
+    "title": "Shopping Lists",
+    "newListNamePlaceholder": "New shopping list name",
+    "createNewListButton": "Create New List",
+    "viewButton": "View",
+    "deleteButton": "Delete",
+    "ingredients": "Ingredients",
+    "recipesInThisList": "Recipes in This List"
+  },
+  "profile": {
+    "editProfile": "Edit Profile",
+    "totalRecipes": "Total Recipes",
+    "publicRecipes": "Public Recipes",
+    "templates": "Templates",
+    "viewAll": "View All",
+    "use": "Use",
+    "minutes": "minutes",
+    "recentRecipes": "Recent Recipes",
+    "recipesInThisList": "Recipes in This List",
+    "view": "View",
+    "shoppingLists": "Shopping Lists",
+    "darkMode": "Dark Mode",
+    "defaultPublicRecipes": "Default Public Recipes",
+    "emailNotifications": "Email Notifications"
+  }
+}

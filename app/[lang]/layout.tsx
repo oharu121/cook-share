@@ -1,36 +1,34 @@
-import { languages } from '@/config/languages';
-import { Header } from '@/components/layout/header';
-import { checkAuthStatus } from '@/lib/auth';
-import { getDictionary } from "@/lib/dictionaries";
+import { languages } from "@/config/languages";
+import { Header } from "@/components/layout/header";
+import { getDictionary } from "@/config/dictionaries";
+import { getUser } from "@/server/dal/user";
+import { verifySession } from "@/server/lib/session";
 
 export async function generateStaticParams() {
-  return languages.map((lang) => ({ lang }))
+  return languages.map((lang) => ({ lang }));
 }
 
 export default async function LocaleLayout({
   children,
   params,
 }: {
-  children: React.ReactNode
-  params: Promise<{ lang: 'en' | 'ja' }>
+  children: React.ReactNode;
+  params: Promise<{ lang: "en" | "ja" }>;
 }) {
-  const isAuthenticated = await checkAuthStatus();
-  const lang = languages.includes((await params).lang as any) ? (await params).lang : 'ja';
+  const lang = languages.includes((await params).lang as any) // eslint-disable-line @typescript-eslint/no-explicit-any
+    ? (await params).lang
+    : "ja";
   const dict = await getDictionary(lang);
-  
-  // Fetch user data if authenticated
-  let user;
-  if (isAuthenticated) {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/user`);
-    user = await response.json();
-  }
+
+  const session = await verifySession(); // Redirects if unauthenticated
+  const user = session ? await getUser() : null;
 
   return (
     <div lang={lang}>
-      <Header 
-        isAuthenticated={isAuthenticated} 
-        lang={lang} 
-        user={user} 
+      <Header
+        isAuthenticated={!!session}
+        lang={lang}
+        user={user ? { name: user.name || "", email: user.email } : undefined}
         dict={dict}
       />
       {children}
