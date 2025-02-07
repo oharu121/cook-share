@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { Metadata } from "next";
 import { LoginForm } from "@/components/auth/login-form";
 import { getDictionary } from "@/config/dictionaries";
@@ -7,8 +9,10 @@ export const metadata: Metadata = {
   description: "Login to your account",
 };
 
-export default async function LoginPage({ params }:  {
-  params: Promise<{ lang: 'en' | 'ja' }>
+export default async function LoginPage({
+  params,
+}: {
+  params: Promise<{ lang: "en" | "ja" }>;
 }) {
   const lang = (await params).lang;
   const dict = await getDictionary(lang as "en" | "ja");

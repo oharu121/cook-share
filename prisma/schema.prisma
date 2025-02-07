@@ -8,38 +8,40 @@ datasource db {
 }
 
 model User {
-  id                String    @id @default(cuid())
-  name              String?
-  email             String    @unique
-  password          String?
-  bio               String?
-  defaultPublic     Boolean   @default(false)
-  emailNotifications Boolean  @default(true)
-  darkMode          Boolean   @default(false)
-  recipes           Recipe[]
-  createdAt         DateTime  @default(now())
-  updatedAt         DateTime  @updatedAt
+  id                 String         @id @default(cuid())
+  name               String?
+  email              String         @unique
+  password           String?
+  bio                String?
+  defaultPublic      Boolean        @default(false)
+  emailNotifications Boolean        @default(true)
+  darkMode           Boolean        @default(false)
+  recipes            Recipe[]
+  shoppingLists      ShoppingList[] @relation("UserShoppingLists")
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
 }
 
 model Recipe {
-  id          String   @id @default(cuid())
-  title       String
-  description String
-  ingredients Json     // Will store Ingredient[]
-  steps       Json     // Will store Step[]
-  cookingTime Int
-  servings    Int
-  difficulty  String
-  category    String?
-  isPublic    Boolean  @default(false)
-  template    Boolean  @default(false)
-  clonedFrom  String?
-  createdBy   String
-  user        User     @relation(fields: [createdBy], references: [id])
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  tags        String[]
-  subRecipes  Json     // Will store SubRecipe[]
+  id            String               @id @default(cuid())
+  title         String
+  description   String
+  ingredients   Json // Will store Ingredient[]
+  steps         Json // Will store Step[]
+  cookingTime   Int
+  servings      Int
+  difficulty    String
+  category      String?
+  isPublic      Boolean              @default(false)
+  template      Boolean              @default(false)
+  clonedFrom    String?
+  createdBy     String
+  user          User                 @relation(fields: [createdBy], references: [id])
+  createdAt     DateTime             @default(now())
+  updatedAt     DateTime             @updatedAt
+  tags          String[]
+  subRecipes    Json // Will store SubRecipe[]
+  shoppingLists ShoppingListRecipe[] // <-- Add this line to establish the relation
 
   @@index([createdBy])
   @@index([category])
@@ -47,11 +49,68 @@ model Recipe {
   @@index([template])
 }
 
-model IngredientMaster {
-  id           String   @id @default(cuid())
-  name         String   @unique
-  allowedUnits String[]
-  commonNames  String[]
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-} 
+model Ingredient {
+  id                String                  @id @default(uuid())
+  defaultName       String
+  ingredientUnits   IngredientUnit[]
+  translations      IngredientTranslation[]
+  shoppingListItems ShoppingListItem[]      @relation("IngredientShoppingListItems")
+}
+
+model IngredientTranslation {
+  id           String @id @default(uuid())
+  ingredientId String
+  locale       String
+  name         String
+
+  ingredient Ingredient @relation(fields: [ingredientId], references: [id])
+}
+
+model Unit {
+  id              String           @id @default(uuid())
+  defaultName     String
+  locale          String
+  abbreviation    String?
+  ingredientUnits IngredientUnit[]
+}
+
+model IngredientUnit {
+  id           String @id @default(uuid())
+  ingredientId String
+  unitId       String
+
+  ingredient Ingredient @relation(fields: [ingredientId], references: [id])
+  unit       Unit       @relation(fields: [unitId], references: [id])
+}
+
+model ShoppingList {
+  id      String               @id @default(uuid())
+  userId  String
+  name    String
+  items   ShoppingListItem[]
+  recipes ShoppingListRecipe[]
+
+  user User @relation(fields: [userId], references: [id], name: "UserShoppingLists")
+}
+
+model ShoppingListItem {
+  id             String  @id @default(uuid())
+  shoppingListId String
+  ingredientId   String
+  quantity       Float
+  checked        Boolean @default(false)
+
+  shoppingList ShoppingList @relation(fields: [shoppingListId], references: [id])
+  ingredient   Ingredient   @relation(fields: [ingredientId], references: [id], name: "IngredientShoppingListItems")
+}
+
+model ShoppingListRecipe {
+  id             String @id @default(uuid())
+  shoppingListId String
+  recipeId       String
+
+  shoppingList ShoppingList @relation(fields: [shoppingListId], references: [id])
+  recipe       Recipe       @relation(fields: [recipeId], references: [id])
+
+  @@unique([shoppingListId, recipeId]) // Add this unique constraint
+}

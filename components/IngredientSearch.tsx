@@ -1,16 +1,16 @@
 import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Command } from "@/components/ui/command";
-import { PrismaClient } from "@prisma/client";
-import { IngredientMaster } from '@/types/recipe';
+import { Ingredient } from "@/types/recipe";
 
 interface IngredientSearchProps {
-  onSelect: (ingredient: IngredientMaster) => void;
+  onSelect: (ingredient: Ingredient) => void;
+  lang: "en" | "ja";
 }
 
-export function IngredientSearch({ onSelect }: IngredientSearchProps) {
+export function IngredientSearch({ onSelect, lang }: IngredientSearchProps) {
   const [search, setSearch] = useState("");
-  const [ingredients, setIngredients] = useState<IngredientMaster[]>([]);
+  const [ingredients, setIngredients] = useState<Ingredient[]>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -18,15 +18,25 @@ export function IngredientSearch({ onSelect }: IngredientSearchProps) {
 
     const fetchIngredients = async () => {
       setLoading(true);
-      const response = await fetch(`/api/ingredients/search?q=${search}`);
-      const data = await response.json();
-      setIngredients(data);
-      setLoading(false);
+      try {
+        const response = await fetch(
+          `/api/ingredients/search?q=${search}&locale=${lang}`,
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch ingredients");
+        }
+        const data = await response.json();
+        setIngredients(data);
+      } catch (error) {
+        console.error("Error fetching ingredients:", error);
+      } finally {
+        setLoading(false);
+      }
     };
 
     const debounce = setTimeout(fetchIngredients, 300);
     return () => clearTimeout(debounce);
-  }, [search]);
+  }, [search, lang]);
 
   return (
     <div className="relative">

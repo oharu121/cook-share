@@ -1,36 +1,48 @@
-import { cache } from 'react';
-import type { IngredientMaster } from '@/types/recipe';
-import { Prisma, PrismaClient } from '@prisma/client';
+import { cache } from "react";
+import { prisma } from "@/server/db";
 
-const prisma = new PrismaClient();
-export const searchIngredients = cache(async (query: string) => {
-  try {
-    return await prisma.ingredientMaster.findMany({
-      where: {
-        OR: [
-          { name: { contains: query, mode: 'insensitive' } },
-          { commonNames: { has: query.toLowerCase() } },
-        ],
-      },
-      take: 10,
-    });
-  } catch (error) {
-    console.error('Failed to search ingredients:', error);
-    return null;
-  }
-});
+export const getLocalizedIngredients = cache(
+  async (query: string, locale: string) => {
+    try {
+      const ingredients = await prisma.ingredient.findMany({
+        where: {
+          OR: [
+            { defaultName: { contains: query, mode: "insensitive" } }, // English search
+            {
+              translations: {
+                some: { name: { contains: query, mode: "insensitive" } },
+              },
+            }, // Any translation
+          ],
+        },
+        include: {
+          translations: true,
+          ingredientUnits: {
+            include: {
+              unit: true,
+            },
+          },
+        },
+      });
 
-export const createIngredient = async (data: Partial<IngredientMaster>) => {
-  try {
-    return await prisma.ingredientMaster.create({
-      data: {
-        name: data.name!,
-        allowedUnits: data.allowedUnits || [],
-        commonNames: data.commonNames || [],
-      },
-    });
-  } catch (error) {
-    console.error('Failed to create ingredient:', error);
-    return null;
-  }
-}; 
+      const result = ingredients.map((ingredient) => ({
+        id: ingredient.id,
+        name:
+          ingredient.translations.find((t) => t.locale === locale)?.name ||
+          ingredient.defaultName,
+        units: ingredient.ingredientUnits.map((iu) => ({
+          id: iu.unit.id,
+          name:
+            iu.unit.locale === locale
+              ? iu.unit.defaultName
+              : iu.unit.defaultName, // Adjust if needed
+        })),
+      }));
+      console.log("result: ", result);
+      return result;
+    } catch (error) {
+      console.error("Failed to get localized ingredients:", error);
+      return null;
+    }
+  },
+);

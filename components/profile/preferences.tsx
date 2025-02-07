@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
@@ -10,9 +10,15 @@ interface PreferencesProps {
   defaultPublic: boolean;
   emailNotifications: boolean;
   darkMode: boolean;
+  dict: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
-export function Preferences({ defaultPublic, emailNotifications, darkMode }: PreferencesProps) {
+export function Preferences({
+  defaultPublic,
+  emailNotifications,
+  darkMode,
+  dict,
+}: PreferencesProps) {
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
 
@@ -34,30 +40,34 @@ export function Preferences({ defaultPublic, emailNotifications, darkMode }: Pre
       <div className="flex items-center gap-2">
         <Switch
           checked={defaultPublic}
-          onCheckedChange={handlePreferenceChange('defaultPublic')}
+          onCheckedChange={handlePreferenceChange("defaultPublic")}
           id="defaultPublic"
           disabled={isPending}
         />
-        <Label htmlFor="defaultPublic">Default Public Recipes</Label>
+        <Label htmlFor="defaultPublic">
+          {dict.profile.defaultPublicRecipes}
+        </Label>
       </div>
       <div className="flex items-center gap-2">
         <Switch
           checked={emailNotifications}
-          onCheckedChange={handlePreferenceChange('emailNotifications')}
+          onCheckedChange={handlePreferenceChange("emailNotifications")}
           id="emailNotifications"
           disabled={isPending}
         />
-        <Label htmlFor="emailNotifications">Email Notifications</Label>
+        <Label htmlFor="emailNotifications">
+          {dict.profile.emailNotifications}
+        </Label>
       </div>
       <div className="flex items-center gap-2">
         <Switch
           checked={darkMode}
-          onCheckedChange={handlePreferenceChange('darkMode')}
+          onCheckedChange={handlePreferenceChange("darkMode")}
           id="darkMode"
           disabled={isPending}
         />
-        <Label htmlFor="darkMode">Dark Mode</Label>
+        <Label htmlFor="darkMode">{dict.profile.darkMode}</Label>
       </div>
     </div>
   );
-} 
+}

@@ -11,4 +11,4 @@ export interface User {
   recipes?: Recipe[];
   createdAt: Date;
   updatedAt: Date;
-} 
+}

@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Step, Ingredient } from "@/types/recipe";
 import { detectIngredients } from "@/server/lib/ingredientDetection";
+import Image from "next/image";
 
 interface StepEditorProps {
   step: Step;
@@ -12,15 +13,12 @@ interface StepEditorProps {
 }
 
 export function StepEditor({ step, ingredients, onChange }: StepEditorProps) {
-  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [, setImageFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
 
   const handleTextChange = (text: string) => {
     const knownIngredients = ingredients.map((i) => i.name);
-    const { detectedIngredients, highlightedText } = detectIngredients(
-      text,
-      knownIngredients
-    );
+    const { detectedIngredients } = detectIngredients(text, knownIngredients);
 
     onChange({
       ...step,
@@ -77,9 +75,11 @@ export function StepEditor({ step, ingredients, onChange }: StepEditorProps) {
         {isUploading && <span>Uploading...</span>}
         {step.image && (
           <div className="relative">
-            <img
+            <Image
               src={step.image}
               alt={`Step ${step.order}`}
+              width={96}
+              height={96}
               className="w-24 h-24 object-cover rounded"
             />
             <Button

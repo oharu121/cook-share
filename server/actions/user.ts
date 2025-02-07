@@ -1,10 +1,8 @@
-'use server'
+"use server";
 
-import { PrismaClient } from "@prisma/client";
 import { verifySession } from "@/server/lib/session";
 import { revalidatePath } from "next/cache";
-
-const prisma = new PrismaClient();
+import { prisma } from "@/server/db";
 
 export async function updatePreference(key: string, value: boolean) {
   try {
@@ -18,10 +16,10 @@ export async function updatePreference(key: string, value: boolean) {
       data: { [key]: value },
     });
 
-    revalidatePath('/profile');
+    revalidatePath("/profile");
     return { success: true };
   } catch (error) {
     console.error("Failed to update preference:", error);
     return { success: false, error: "Failed to update preference" };
   }
-} 
+}

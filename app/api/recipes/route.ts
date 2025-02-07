@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 import { verifySession } from "@/server/lib/session";
-import { recipeSelect, toRecipeDTO, toRecipeListDTO } from "@/server/dto/recipe.dto";
+import {
+  recipeSelect,
+  toRecipeDTO,
+  toRecipeListDTO,
+} from "@/server/dto/recipe.dto";
 import { Prisma, PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -58,7 +62,7 @@ export async function GET(request: Request) {
     console.error("Failed to fetch recipes:", error);
     return NextResponse.json(
       { error: "Failed to fetch recipes" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -71,7 +75,7 @@ export async function POST(request: Request) {
     }
 
     const data = await request.json();
-    
+
     const recipe = await prisma.recipe.create({
       data: {
         ...data,
@@ -87,7 +91,7 @@ export async function POST(request: Request) {
     if (!recipeDTO) {
       return NextResponse.json(
         { error: "Failed to process recipe" },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
@@ -96,7 +100,7 @@ export async function POST(request: Request) {
     console.error("Failed to create recipe:", error);
     return NextResponse.json(
       { error: "Failed to create recipe" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

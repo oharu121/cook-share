@@ -1,5 +1,7 @@
-'use client';
+"use client";
 
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { login } from "@/server/actions/auth";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -20,7 +22,13 @@ interface LoginFormProps {
   };
 }
 
-function SubmitButton({ dict, pending }: { dict: LoginFormProps['dict'], pending: boolean }) {
+function SubmitButton({
+  dict,
+  pending,
+}: {
+  dict: LoginFormProps["dict"];
+  pending: boolean;
+}) {
   return (
     <Button type="submit" disabled={pending}>
       {pending ? dict.auth.login.loading : dict.auth.login.submitButton}
@@ -29,7 +37,20 @@ function SubmitButton({ dict, pending }: { dict: LoginFormProps['dict'], pending
 }
 
 export function LoginForm({ lang, dict }: LoginFormProps) {
+  const router = useRouter();
   const [state, action, pending] = useActionState(login, undefined);
+
+  // Manage form input values manually
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  useEffect(() => {
+    if (state?.success && state.redirectPath) {
+      router.push(`/${lang}${state.redirectPath}`);
+    }
+  }, [state, router, lang]);
 
   return (
     <div className="grid gap-6">
@@ -45,6 +66,10 @@ export function LoginForm({ lang, dict }: LoginFormProps) {
             autoCorrect="off"
             className="w-full rounded-md border p-2"
             required
+            value={formData.email}
+            onChange={(e) =>
+              setFormData((prev) => ({ ...prev, email: e.target.value }))
+            }
           />
           {state?.errors?.email && (
             <p className="text-sm text-red-500">{state.errors.email[0]}</p>
@@ -59,6 +84,10 @@ export function LoginForm({ lang, dict }: LoginFormProps) {
             autoComplete="current-password"
             className="w-full rounded-md border p-2"
             required
+            value={formData.password}
+            onChange={(e) =>
+              setFormData((prev) => ({ ...prev, password: e.target.value }))
+            }
           />
           {state?.errors?.password && (
             <p className="text-sm text-red-500">{state.errors.password[0]}</p>
@@ -70,13 +99,10 @@ export function LoginForm({ lang, dict }: LoginFormProps) {
         <SubmitButton dict={dict} pending={pending} />
       </form>
       <div className="text-center text-sm">
-        <Link 
-          href={`/${lang}/register`}
-          className="underline hover:text-primary"
-        >
+        <Link href={`/${lang}/signup`} className="underline hover:text-primary">
           {dict.auth.login.registerLink}
         </Link>
       </div>
     </div>
   );
-} 
+}

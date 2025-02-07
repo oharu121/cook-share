@@ -1,7 +1,7 @@
-import type { Prisma } from '@prisma/client';
-import { cache } from 'react';
-import { getUser } from '../dal/user';
-import { userSelect } from './user.dto';
+import type { Prisma } from "@prisma/client";
+import { cache } from "react";
+import { getUser } from "../dal/user";
+import { userSelect } from "./user.dto";
 
 // Define the select type for consistent recipe queries
 export const recipeSelect = {
@@ -11,12 +11,20 @@ export const recipeSelect = {
   ingredients: true,
   steps: true,
   cookingTime: true,
+  servings: true,
   difficulty: true,
+  category: true,
   isPublic: true,
+  template: true,
+  tags: true,
   createdAt: true,
   createdBy: true,
   user: {
-    select: userSelect,
+    select: {
+      id: true,
+      name: true,
+      email: true,
+    },
   },
 } as const;
 
@@ -34,58 +42,77 @@ export type RecipeDTO = {
   id: string;
   title: string;
   description: string;
-  ingredients: any[]; // Parsed from JSON
-  steps: any[]; // Parsed from JSON
+  ingredients: Prisma.JsonValue;
+  steps: Prisma.JsonValue;
   cookingTime: number;
+  servings: number;
   difficulty: string;
+  category?: string;
   isPublic: boolean;
+  template: boolean;
+  tags: string[];
   createdAt: Date;
   author: {
+    id: string;
     name: string | null;
     email: string | null;
   } | null;
 };
 
 // Permission checks
-function canSeeRecipeDetails(viewer: UserSelect | null, recipe: RecipeSelect): boolean {
+function canSeeRecipeDetails(
+  viewer: UserSelect | null,
+  recipe: RecipeSelect,
+): boolean {
   if (!viewer) return recipe.isPublic;
   return recipe.isPublic || recipe.createdBy === viewer.id;
 }
 
 // DTO transformation functions
-export const toRecipeDTO = cache(async (recipe: RecipeSelect): Promise<RecipeDTO | null> => {
-  const viewer = await getUser();
-  
-  if (!canSeeRecipeDetails(viewer, recipe)) {
-    return null;
-  }
+export const toRecipeDTO = cache(
+  async (recipe: RecipeSelect): Promise<RecipeDTO | null> => {
+    const viewer = await getUser();
 
-  return {
-    id: recipe.id,
-    title: recipe.title,
-    description: recipe.description,
-    ingredients: JSON.parse(recipe.ingredients as string),
-    steps: JSON.parse(recipe.steps as string),
-    cookingTime: recipe.cookingTime,
-    difficulty: recipe.difficulty,
-    isPublic: recipe.isPublic,
-    createdAt: recipe.createdAt,
-    author: recipe.user ? {
-      name: recipe.user.name,
-      email: viewer?.id === recipe.createdBy ? recipe.user.email : null,
-    } : null,
-  };
-});
+    if (!canSeeRecipeDetails(viewer, recipe)) {
+      return null;
+    }
+
+    return {
+      id: recipe.id,
+      title: recipe.title,
+      description: recipe.description,
+      ingredients: recipe.ingredients,
+      steps: recipe.steps,
+      cookingTime: recipe.cookingTime,
+      servings: recipe.servings,
+      difficulty: recipe.difficulty,
+      category: recipe.category || undefined,
+      isPublic: recipe.isPublic,
+      template: recipe.template,
+      tags: recipe.tags || [],
+      createdAt: recipe.createdAt,
+      author: recipe.user
+        ? {
+            id: recipe.user.id,
+            name: recipe.user.name,
+            email: viewer?.id === recipe.createdBy ? recipe.user.email : null,
+          }
+        : null,
+    };
+  },
+);
 
 // Collection DTO
-export const toRecipeListDTO = cache(async (recipes: RecipeSelect[]): Promise<RecipeDTO[]> => {
-  const viewer = await getUser();
-  
-  const dtos = await Promise.all(
-    recipes
-      .filter(recipe => canSeeRecipeDetails(viewer, recipe))
-      .map(recipe => toRecipeDTO(recipe))
-  );
+export const toRecipeListDTO = cache(
+  async (recipes: RecipeSelect[]): Promise<RecipeDTO[]> => {
+    const viewer = await getUser();
 
-  return dtos.filter((dto): dto is RecipeDTO => dto !== null);
-});
+    const dtos = await Promise.all(
+      recipes
+        .filter((recipe) => canSeeRecipeDetails(viewer, recipe))
+        .map((recipe) => toRecipeDTO(recipe)),
+    );
+
+    return dtos.filter((dto): dto is RecipeDTO => dto !== null);
+  },
+);

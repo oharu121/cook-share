@@ -5,14 +5,14 @@ interface DetectionResult {
 
 export function detectIngredients(
   text: string,
-  knownIngredients: string[]
+  knownIngredients: string[],
 ): DetectionResult {
   const detectedIngredients: string[] = [];
   let highlightedText = text;
 
   // Sort ingredients by length (longest first) to avoid partial matches
   const sortedIngredients = [...knownIngredients].sort(
-    (a, b) => b.length - a.length
+    (a, b) => b.length - a.length,
   );
 
   for (const ingredient of sortedIngredients) {
@@ -22,7 +22,7 @@ export function detectIngredients(
       // Wrap detected ingredients in highlight spans
       highlightedText = highlightedText.replace(
         regex,
-        `<span class="bg-yellow-100 dark:bg-yellow-900">$&</span>`
+        `<span class="bg-yellow-100 dark:bg-yellow-900">$&</span>`,
       );
     }
   }

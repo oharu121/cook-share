@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,14 +10,16 @@ interface SubRecipeEditorProps {
   subRecipe: SubRecipe;
   onChange: (updatedSubRecipe: SubRecipe) => void;
   onDelete: () => void;
+  lang: "en" | "ja";
 }
 
 export function SubRecipeEditor({
   subRecipe,
   onChange,
   onDelete,
+  lang,
 }: SubRecipeEditorProps) {
-  const [newStep, setNewStep] = useState<Partial<Step>>({});
+  // const [newStep, setNewStep] = useState<Partial<Step>>({});
 
   const addIngredient = (ingredient: Ingredient) => {
     onChange({
@@ -60,7 +61,7 @@ export function SubRecipeEditor({
       {/* Ingredients */}
       <div className="space-y-4 mt-6">
         <h3 className="font-semibold">Ingredients</h3>
-        <IngredientSearch onSelect={addIngredient} />
+        <IngredientSearch onSelect={addIngredient} lang={lang} />
         <div className="space-y-2">
           {subRecipe.ingredients.map((ingredient, index) => (
             <div key={ingredient.id} className="flex items-center gap-2">
@@ -97,10 +98,6 @@ export function SubRecipeEditor({
                 const newSteps = [...subRecipe.steps];
                 newSteps[index] = updatedStep;
                 onChange({ ...subRecipe, steps: newSteps });
-              }}
-              onDetectIngredients={(text) => {
-                // Implement ingredient detection logic
-                return [];
               }}
             />
           </div>

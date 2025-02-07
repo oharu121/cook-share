@@ -1,6 +1,6 @@
-import { cache } from 'react';
-import type { Prisma } from '@prisma/client';
-import { getUser } from '@/server/dal/user';
+import { cache } from "react";
+import type { Prisma } from "@prisma/client";
+import { getUser } from "@/server/dal/user";
 
 // Define the select type for consistent user queries
 export const userSelect = {
@@ -36,7 +36,7 @@ function canSeeEmail(viewer: UserSelect | null, user: UserSelect): boolean {
 // DTO transformation
 export const toUserDTO = cache(async (user: UserSelect): Promise<UserDTO> => {
   const viewer = await getUser();
-  
+
   return {
     id: user.id,
     name: user.name,
@@ -46,4 +46,4 @@ export const toUserDTO = cache(async (user: UserSelect): Promise<UserDTO> => {
       emailNotifications: user.emailNotifications,
     },
   };
-}); 
+});

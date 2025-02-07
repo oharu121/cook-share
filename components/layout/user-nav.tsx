@@ -55,10 +55,14 @@ export function UserNav({ user, lang, dict }: UserNavProps) {
             <Link href={`/${lang}/profile`}>{dict.nav.profile.view}</Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link href={`/${lang}/recipes/create`}>{dict.nav.profile.createRecipe}</Link>
+            <Link href={`/${lang}/recipes/create`}>
+              {dict.nav.profile.createRecipe}
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <Link href={`/${lang}/profile/settings`}>{dict.nav.profile.settings}</Link>
+            <Link href={`/${lang}/profile/settings`}>
+              {dict.nav.profile.settings}
+            </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
@@ -66,4 +70,4 @@ export function UserNav({ user, lang, dict }: UserNavProps) {
       </DropdownMenuContent>
     </DropdownMenu>
   );
-} 
+}

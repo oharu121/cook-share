@@ -1,8 +1,8 @@
-import { languages } from '@/config/languages';
-import { Header } from '@/components/layout/header';
-import { getDictionary } from '@/config/dictionaries';
-import {  getUser } from '@/server/dal/user';
-import { verifySession } from '@/server/lib/session';
+import { languages } from "@/config/languages";
+import { Header } from "@/components/layout/header";
+import { getDictionary } from "@/config/dictionaries";
+import { getUser } from "@/server/dal/user";
+import { verifySession } from "@/server/lib/session";
 
 export async function generateStaticParams() {
   return languages.map((lang) => ({ lang }));
@@ -13,11 +13,11 @@ export default async function LocaleLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: Promise<{ lang: 'en' | 'ja' }>;
+  params: Promise<{ lang: "en" | "ja" }>;
 }) {
-  const lang = languages.includes((await params).lang as any)
+  const lang = languages.includes((await params).lang as any) // eslint-disable-line @typescript-eslint/no-explicit-any
     ? (await params).lang
-    : 'ja';
+    : "ja";
   const dict = await getDictionary(lang);
 
   const session = await verifySession(); // Redirects if unauthenticated
@@ -28,7 +28,7 @@ export default async function LocaleLayout({
       <Header
         isAuthenticated={!!session}
         lang={lang}
-        user={user ? { name: user.name || '', email: user.email } : undefined}
+        user={user ? { name: user.name || "", email: user.email } : undefined}
         dict={dict}
       />
       {children}
