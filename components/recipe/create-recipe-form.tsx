@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Recipe, RecipeCategory, Ingredient, Step } from "@/types/recipe";
 import { createRecipe } from "@/server/actions/recipe";
 import { Button } from "@/components/ui/button";
@@ -18,7 +18,8 @@ import {
 import { IngredientSearch } from "@/components/IngredientSearch";
 import { StepEditor } from "@/components/StepEditor";
 // import { SubRecipeEditor } from "@/components/SubRecipeEditor";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+
 
 interface CreateRecipeFormProps {
   lang: "en" | "ja";
@@ -61,6 +62,8 @@ interface CreateRecipeFormProps {
 }
 
 export function CreateRecipeForm({ lang, dict }: CreateRecipeFormProps) {
+  const searchParams = useSearchParams();
+  const recipeId = searchParams.get("clone");
   const router = useRouter();
   const [recipe, setRecipe] = useState<Partial<Recipe>>({
     title: "",
@@ -75,6 +78,22 @@ export function CreateRecipeForm({ lang, dict }: CreateRecipeFormProps) {
     isPublic: false,
     template: false,
   });
+
+  useEffect(() => {
+    const fetchRecipe = async () => {
+      if (recipeId) {
+        try {
+          const response = await fetch(`/api/recipes/${recipeId}`);
+          const data = await response.json();
+          setRecipe(data);
+        } catch (error) {
+          console.error("Failed to fetch recipe:", error);
+        }
+      }
+    };
+
+    fetchRecipe();
+  }, [recipeId]);
 
   const [newTag, setNewTag] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
