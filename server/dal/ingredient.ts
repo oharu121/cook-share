@@ -3,6 +3,7 @@ import { prisma } from "@/server/db";
 
 export const getLocalizedIngredients = cache(
   async (query: string, locale: string) => {
+    console.log("query: ", query);
     try {
       const ingredients = await prisma.ingredient.findMany({
         where: {
