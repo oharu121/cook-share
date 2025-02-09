@@ -1,27 +1,16 @@
 export const dynamic = "force-dynamic";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import Link from "next/link";
 import { getDictionary } from "@/config/dictionaries";
 import { getUserRecipes } from "@/server/dal/recipe";
 
 export default async function RecipesPage({
-  searchParams,
   params,
 }: {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
   params: Promise<{ lang: "en" | "ja" }>;
 }) {
   // Await the searchParams
-  const paramsResolved = await searchParams;
   const { lang } = await params;
   const dict = await getDictionary(lang);
   const recipes = await getUserRecipes();
@@ -35,36 +24,6 @@ export default async function RecipesPage({
             {dict.recipesPage.createButton}
           </Link>
         </Button>
-      </div>
-
-      {/* Filters */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-        <Input
-          placeholder={dict.recipesPage.searchPlaceholder}
-          className="w-full"
-          defaultValue={paramsResolved.search?.toString()}
-        />
-        <Select defaultValue={paramsResolved.difficulty?.toString()}>
-          <SelectTrigger>
-            <SelectValue placeholder={dict.recipesPage.difficultyPlaceholder} />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="easy">{dict.difficulty.easy}</SelectItem>
-            <SelectItem value="medium">{dict.difficulty.medium}</SelectItem>
-            <SelectItem value="hard">{dict.difficulty.hard}</SelectItem>
-          </SelectContent>
-        </Select>
-        <Select defaultValue={paramsResolved.time?.toString()}>
-          <SelectTrigger>
-            <SelectValue placeholder={dict.recipesPage.timePlaceholder} />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="15">{dict.time.under15}</SelectItem>
-            <SelectItem value="30">{dict.time.under30}</SelectItem>
-            <SelectItem value="60">{dict.time.under60}</SelectItem>
-            <SelectItem value="more">{dict.time.over60}</SelectItem>
-          </SelectContent>
-        </Select>
       </div>
 
       {/* Recipe Grid */}

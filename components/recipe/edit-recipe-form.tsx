@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Recipe, Ingredient, Step } from "@/types/recipe";
+import { Recipe, Ingredient, Step, RecipeCategory } from "@/types/recipe";
 import { updateRecipe } from "@/server/actions/recipe";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -45,12 +45,31 @@ interface EditRecipeFormProps {
       servings: string;
       difficulty: string;
     };
+    difficulty: {
+      easy: string;
+      medium: string;
+      hard: string;
+    };
     publishing: {
       title: string;
       isPublic: string;
       isTemplate: string;
     };
-    submit: string;
+    category: {
+      title: string;
+      placeholder: string;
+    };
+    categories: {
+      breakfast: string;
+      lunch: string;
+      dinner: string;
+      dessert: string;
+      appetizer: string;
+      mainCourse: string;
+      vegetarian: string;
+      quickAndEasy: string;
+    };
+    update: string;
     cancel: string;
   };
   recipeId: string;
@@ -348,9 +367,44 @@ export function EditRecipeForm({ lang, dict, recipeId }: EditRecipeFormProps) {
                 <SelectValue placeholder="Select difficulty" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="easy">Easy</SelectItem>
-                <SelectItem value="medium">Medium</SelectItem>
-                <SelectItem value="hard">Hard</SelectItem>
+                <SelectItem value="easy">{dict.difficulty.easy}</SelectItem>
+                <SelectItem value="medium">{dict.difficulty.medium}</SelectItem>
+                <SelectItem value="hard">{dict.difficulty.hard}</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div>
+            <Label htmlFor="category-trigger">{dict.category.title}</Label>
+            <Select
+              value={recipe.category}
+              onValueChange={(value: RecipeCategory) =>
+                setRecipe((prev) => ({ ...prev, category: value }))
+              }
+            >
+              <SelectTrigger id="category-trigger">
+                <SelectValue placeholder={dict.category.placeholder} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="breakfast">
+                  {dict.categories.breakfast}
+                </SelectItem>
+                <SelectItem value="lunch">{dict.categories.lunch}</SelectItem>
+                <SelectItem value="dinner">{dict.categories.dinner}</SelectItem>
+                <SelectItem value="dessert">
+                  {dict.categories.dessert}
+                </SelectItem>
+                <SelectItem value="appetizer">
+                  {dict.categories.appetizer}
+                </SelectItem>
+                <SelectItem value="mainCourse">
+                  {dict.categories.mainCourse}
+                </SelectItem>
+                <SelectItem value="vegetarian">
+                  {dict.categories.vegetarian}
+                </SelectItem>
+                <SelectItem value="quickAndEasy">
+                  {dict.categories.quickAndEasy}
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -372,23 +426,12 @@ export function EditRecipeForm({ lang, dict, recipeId }: EditRecipeFormProps) {
             />
             <Label htmlFor="isPublic">{dict.publishing.isPublic}</Label>
           </div>
-          <div className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              id="template"
-              checked={recipe.template}
-              onChange={(e) =>
-                setRecipe((prev) => ({ ...prev, template: e.target.checked }))
-              }
-            />
-            <Label htmlFor="template">{dict.publishing.isTemplate}</Label>
-          </div>
         </div>
       </Card>
 
       <div className="space-y-4">
         <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? "Saving..." : dict.submit}
+          {isSubmitting ? "Saving..." : dict.update}
         </Button>
         <Button
           type="button"

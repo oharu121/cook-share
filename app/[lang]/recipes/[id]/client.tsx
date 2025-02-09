@@ -153,7 +153,7 @@ export default function RecipeDetailClient({
             <p className="text-muted-foreground mt-2">{recipe.description}</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             <Card className="p-4">
               <h3 className="font-semibold mb-2">{dict.labels.cookingTime}</h3>
               <p>
@@ -168,7 +168,15 @@ export default function RecipeDetailClient({
             </Card>
             <Card className="p-4">
               <h3 className="font-semibold mb-2">{dict.labels.difficulty}</h3>
-              <p className="capitalize">{recipe.difficulty}</p>
+              <p className="capitalize">
+                {dict.recipe.difficulty[recipe.difficulty]}
+              </p>
+            </Card>
+            <Card className="p-4">
+              <h3 className="font-semibold mb-2">{dict.labels.category}</h3>
+              <p className="capitalize">
+                {dict.categories[recipe.category || ""]}
+              </p>
             </Card>
           </div>
 

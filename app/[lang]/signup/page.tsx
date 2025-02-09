@@ -1,5 +1,5 @@
 export const dynamic = "force-dynamic";
-  
+
 import { SignupForm } from "@/components/auth/signup-form";
 import { getDictionary } from "@/config/dictionaries";
 

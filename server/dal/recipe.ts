@@ -1,7 +1,7 @@
 import { cache } from "react";
 import { verifySession } from "../lib/session";
 import { prisma } from "@/server/db";
-import { recipeSelect, toRecipeDTO, toRecipeListDTO } from "../dto/recipe.dto";
+import { recipeSelect, toRecipeListDTO } from "../dto/recipe.dto";
 import { Prisma } from "@prisma/client";
 import { RecipeCategory } from "@/types/recipe";
 
@@ -28,14 +28,43 @@ export const getUserRecipes = cache(async () => {
   }
 });
 
-export const getAllRecipes = async () => {
+export const getAllRecipes = async (filters?: {
+  search?: string;
+  difficulty?: string;
+  time?: string;
+  category?: string;
+}) => {
+  const whereClause: Prisma.RecipeWhereInput = {};
+
+  if (filters?.search) {
+    whereClause.title = { contains: filters.search, mode: "insensitive" };
+  }
+
+  if (filters?.difficulty) {
+    whereClause.difficulty = filters.difficulty;
+  }
+
+  if (filters?.time) {
+    if (filters.time === "more") {
+      whereClause.cookingTime = { gt: 60 };
+    } else {
+      const cookingTime = parseInt(filters.time, 10);
+      if (!isNaN(cookingTime)) {
+        whereClause.cookingTime = { lte: cookingTime };
+      }
+    }
+  }
+
+  if (filters?.category) {
+    whereClause.category = filters.category;
+  }
+
   const recipes = await prisma.recipe.findMany({
-      select: recipeSelect,
-      orderBy: {
-        createdAt: "desc",
-      },
-    });
-    
+    where: whereClause,
+    select: recipeSelect,
+    orderBy: { createdAt: "desc" },
+  });
+
   return toRecipeListDTO(recipes);
 };
 

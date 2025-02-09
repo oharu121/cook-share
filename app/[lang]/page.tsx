@@ -55,7 +55,7 @@ export default async function LandingPage({
           {dict.landingPage.ctaDescription}
         </p>
         <Button asChild>
-          <Link href={`/${lang}/register`}>
+          <Link href={`/${lang}/signup`}>
             {dict.landingPage.registerButton}
           </Link>
         </Button>

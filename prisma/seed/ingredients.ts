@@ -338,7 +338,12 @@ async function main() {
       { id: "6", defaultName: "カップ", locale: "ja", abbreviation: "カップ" },
       { id: "7", defaultName: "liter", locale: "en", abbreviation: "L" },
       { id: "8", defaultName: "リットル", locale: "ja", abbreviation: "L" },
-      { id: "9", defaultName: "tablespoon", locale: "en", abbreviation: "tbsp" },
+      {
+        id: "9",
+        defaultName: "tablespoon",
+        locale: "en",
+        abbreviation: "tbsp",
+      },
       { id: "10", defaultName: "大さじ", locale: "ja", abbreviation: "tbsp" },
       { id: "11", defaultName: "teaspoon", locale: "en", abbreviation: "tsp" },
       { id: "12", defaultName: "小さじ", locale: "ja", abbreviation: "tsp" },
