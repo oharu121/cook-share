@@ -13,7 +13,15 @@ const protectedRoutes = [
   "/recipes",
   "/shopping-lists",
 ];
-const publicRoutes = ["/login", "/register", "/", "/browse"];
+const publicRoutes = [
+  "/login",
+  "/register",
+  "/",
+  "/browse",
+  "/signup",
+  "/ja",
+  "/en",
+];
 
 function getLocale(req: NextRequest): string {
   const path = req.nextUrl.pathname;
@@ -59,14 +67,14 @@ export async function middleware(req: NextRequest) {
 
   const normalizedPath = removeLocalePrefix(path);
   const isProtectedRoute = protectedRoutes.some((route) =>
-    normalizedPath.startsWith(route)
+    normalizedPath.startsWith(route),
   );
   const isPublicRoute = publicRoutes.some((route) => normalizedPath === route);
+  console.log("normalizedPath: ", normalizedPath);
 
   // Verify session **ONLY for protected routes**
-  let session = null;
+  const session = await verifySession();
   if (isProtectedRoute) {
-    session = await verifySession();
     if (!session?.id) {
       return NextResponse.redirect(new URL(`/${lang}/login`, req.nextUrl));
     }
@@ -74,18 +82,19 @@ export async function middleware(req: NextRequest) {
 
   // Redirect authenticated users away from public routes
   if (isPublicRoute && session?.id) {
-    return NextResponse.redirect(new URL(`/${lang}/recipes`, req.nextUrl));
+    if (normalizedPath !== "/browse") {
+      return NextResponse.redirect(new URL(`/${lang}/recipes`, req.nextUrl));
+    }
   }
 
   // Handle locale redirection
   const pathnameIsMissingLocale = locales.every(
-    (locale) =>
-      !path.startsWith(`/${locale}/`) && path !== `/${locale}`
+    (locale) => !path.startsWith(`/${locale}/`) && path !== `/${locale}`,
   );
 
   if (pathnameIsMissingLocale) {
     return NextResponse.redirect(
-      new URL(`/${lang}${path.startsWith("/") ? "" : "/"}${path}`, req.url)
+      new URL(`/${lang}${path.startsWith("/") ? "" : "/"}${path}`, req.url),
     );
   }
 
@@ -98,12 +107,12 @@ export async function middleware(req: NextRequest) {
   // Security headers
   response.headers.set(
     "Content-Security-Policy",
-    "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:;"
+    "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:;",
   );
   response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
   response.headers.set(
     "Permissions-Policy",
-    "camera=(), microphone=(), geolocation=()"
+    "camera=(), microphone=(), geolocation=()",
   );
   response.headers.set("X-Frame-Options", "DENY");
   response.headers.set("X-Content-Type-Options", "nosniff");

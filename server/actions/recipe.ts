@@ -1,6 +1,6 @@
 "use server";
 
-import { Ingredient, Recipe, Step, SubRecipe } from "@/types/recipe";
+import { Recipe } from "@/types/recipe";
 import { getUser } from "@/server/dal/user";
 import { prisma } from "@/server/db";
 import { Prisma } from "@prisma/client";
@@ -52,7 +52,7 @@ export async function updateRecipe(id: string, recipeData: Partial<Recipe>) {
 
     // Prepare the data according to Prisma's schema
     const { user: _, ...recipeWithoutUser } = recipeData;
-
+    console.log("recipeWithoutUser: ", recipeWithoutUser);
     const updatedRecipe = await prisma.recipe.update({
       where: { id, createdBy: user.id }, // Ensure the user owns the recipe
       data: {

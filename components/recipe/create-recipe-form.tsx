@@ -20,7 +20,6 @@ import { StepEditor } from "@/components/StepEditor";
 // import { SubRecipeEditor } from "@/components/SubRecipeEditor";
 import { useRouter, useSearchParams } from "next/navigation";
 
-
 interface CreateRecipeFormProps {
   lang: "en" | "ja";
   dict: {
@@ -47,6 +46,11 @@ interface CreateRecipeFormProps {
       servings: string;
       difficulty: string;
     };
+    difficulty: {
+      easy: string;
+      medium: string;
+      hard: string;
+    };
     publishing: {
       title: string;
       isPublic: string;
@@ -55,6 +59,16 @@ interface CreateRecipeFormProps {
     category: {
       title: string;
       placeholder: string;
+    };
+    categories: {
+      breakfast: string;
+      lunch: string;
+      dinner: string;
+      dessert: string;
+      appetizer: string;
+      mainCourse: string;
+      vegetarian: string;
+      quickAndEasy: string;
     };
     submit: string;
     cancel: string;
@@ -400,9 +414,44 @@ export function CreateRecipeForm({ lang, dict }: CreateRecipeFormProps) {
                 <SelectValue placeholder="Select difficulty" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="easy">Easy</SelectItem>
-                <SelectItem value="medium">Medium</SelectItem>
-                <SelectItem value="hard">Hard</SelectItem>
+                <SelectItem value="easy">{dict.difficulty.easy}</SelectItem>
+                <SelectItem value="medium">{dict.difficulty.medium}</SelectItem>
+                <SelectItem value="hard">{dict.difficulty.hard}</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div>
+            <Label htmlFor="category-trigger">{dict.category.title}</Label>
+            <Select
+              value={recipe.category}
+              onValueChange={(value: RecipeCategory) =>
+                setRecipe((prev) => ({ ...prev, category: value }))
+              }
+            >
+              <SelectTrigger id="category-trigger">
+                <SelectValue placeholder={dict.category.placeholder} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="breakfast">
+                  {dict.categories.breakfast}
+                </SelectItem>
+                <SelectItem value="lunch">{dict.categories.lunch}</SelectItem>
+                <SelectItem value="dinner">{dict.categories.dinner}</SelectItem>
+                <SelectItem value="dessert">
+                  {dict.categories.dessert}
+                </SelectItem>
+                <SelectItem value="appetizer">
+                  {dict.categories.appetizer}
+                </SelectItem>
+                <SelectItem value="mainCourse">
+                  {dict.categories.mainCourse}
+                </SelectItem>
+                <SelectItem value="vegetarian">
+                  {dict.categories.vegetarian}
+                </SelectItem>
+                <SelectItem value="quickAndEasy">
+                  {dict.categories.quickAndEasy}
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -427,28 +476,7 @@ export function CreateRecipeForm({ lang, dict }: CreateRecipeFormProps) {
         </div>
       </Card>
 
-      <div className="space-y-4">
-        <div>
-          <Label htmlFor="category-trigger">{dict.category.title}</Label>
-          <Select
-            value={recipe.category}
-            onValueChange={(value: RecipeCategory) =>
-              setRecipe((prev) => ({ ...prev, category: value }))
-            }
-          >
-            <SelectTrigger id="category-trigger">
-              <SelectValue placeholder={dict.category.placeholder} />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="Breakfast">Breakfast</SelectItem>
-              <SelectItem value="Lunch">Lunch</SelectItem>
-              <SelectItem value="Dinner">Dinner</SelectItem>
-              <SelectItem value="Dessert">Dessert</SelectItem>
-              <SelectItem value="Appetizer">Appetizer</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
+      <div className="space-y-4"></div>
 
       <div className="flex justify-end gap-4">
         <Button

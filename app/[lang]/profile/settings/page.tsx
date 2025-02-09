@@ -57,7 +57,7 @@ export default async function SettingsPage() {
                   Receive updates about your recipes
                 </p>
               </div>
-              <Switch defaultChecked={user?.emailNotifications || false } />
+              <Switch defaultChecked={user?.emailNotifications || false} />
             </div>
             <Separator />
             <div className="flex items-center justify-between">
@@ -67,7 +67,7 @@ export default async function SettingsPage() {
                   Toggle dark mode theme
                 </p>
               </div>
-                <Switch defaultChecked={user?.darkMode || false} />
+              <Switch defaultChecked={user?.darkMode || false} />
             </div>
           </div>
         </Card>

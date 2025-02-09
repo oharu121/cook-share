@@ -59,11 +59,11 @@ export function UserNav({ user, lang, dict }: UserNavProps) {
               {dict.nav.profile.createRecipe}
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem asChild>
+          {/* <DropdownMenuItem asChild>
             <Link href={`/${lang}/profile/settings`}>
               {dict.nav.profile.settings}
             </Link>
-          </DropdownMenuItem>
+          </DropdownMenuItem> */}
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <LogoutMenuItem label={dict.nav.profile.signout} />

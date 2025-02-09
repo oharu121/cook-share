@@ -86,16 +86,25 @@ export default function ShoppingListDetailClient({
         </ul>
       </div>
 
-      <div className="mt-6">
+      {/* <div className="mt-6">
         <h2 className="text-xl font-semibold">
           {dict.shoppingLists.recipesInThisList}
         </h2>
-        <ul>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {shoppingList?.recipes.map(({ recipe }) => (
-            <li key={recipe.id}>{recipe.title}</li>
+            <Card key={recipe.id} className="p-6">
+              <div className="flex justify-between items-center">
+                  <h3 className="font-semibold mb-2">{recipe.title}</h3>
+                  <Button variant="outline" size="sm" asChild>
+                    <Link href={`/${lang}/recipes/${recipe.id}`}>
+                    {dict.profile.view}
+                    </Link>
+                  </Button>
+                </div>
+            </Card>
           ))}
-        </ul>
-      </div>
+        </div>
+      </div> */}
     </div>
   );
 }
