@@ -35,9 +35,11 @@ interface CreateRecipeFormProps {
       title: string;
       addButton: string;
       searchPlaceholder: string;
+      removeButton: string;
     };
     steps: {
       title: string;
+      step: string;
       addButton: string;
     };
     details: {
@@ -188,7 +190,7 @@ export function CreateRecipeForm({ lang, dict }: CreateRecipeFormProps) {
             />
           </div>
           <div>
-            <Label>Description</Label>
+            <Label>{dict.basicInfo.description}</Label>
             <Textarea
               value={recipe.description}
               onChange={(e) =>
@@ -220,7 +222,7 @@ export function CreateRecipeForm({ lang, dict }: CreateRecipeFormProps) {
                   }
                 }}
               >
-                Add
+                {dict.basicInfo.addTag}
               </Button>
             </div>
             <div className="flex flex-wrap gap-2">
@@ -252,7 +254,7 @@ export function CreateRecipeForm({ lang, dict }: CreateRecipeFormProps) {
       <Card className="p-6">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-semibold">{dict.ingredients.title}</h2>
-          <IngredientSearch onSelect={addIngredient} lang={lang} />
+          <IngredientSearch onSelect={addIngredient} lang={lang} dict={dict} />
         </div>
         <div className="space-y-2">
           {recipe.ingredients?.map((ingredient, index) => (
@@ -303,7 +305,7 @@ export function CreateRecipeForm({ lang, dict }: CreateRecipeFormProps) {
                   }));
                 }}
               >
-                Remove
+                {dict.ingredients.removeButton}
               </Button>
             </div>
           ))}
@@ -353,7 +355,9 @@ export function CreateRecipeForm({ lang, dict }: CreateRecipeFormProps) {
         <div className="space-y-4">
           {recipe.steps?.map((step, index) => (
             <div key={step.id}>
-              <Label>Step {index + 1}</Label>
+              <Label>
+                {dict.steps.step} {index + 1}
+              </Label>
               <StepEditor
                 key={step.id}
                 step={step}

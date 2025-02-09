@@ -191,10 +191,12 @@
     "ingredients": {
       "title": "Ingredients",
       "addButton": "Add Ingredient",
+      "removeButton": "Remove",
       "searchPlaceholder": "Search ingredients..."
     },
     "steps": {
       "title": "Steps",
+      "step": "Step",
       "addButton": "Add Step"
     },
     "details": {

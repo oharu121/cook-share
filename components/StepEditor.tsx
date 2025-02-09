@@ -1,10 +1,6 @@
-import { useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Step, Ingredient } from "@/types/recipe";
 import { detectIngredients } from "@/server/lib/ingredientDetection";
-import Image from "next/image";
 
 interface StepEditorProps {
   step: Step;
@@ -13,8 +9,8 @@ interface StepEditorProps {
 }
 
 export function StepEditor({ step, ingredients, onChange }: StepEditorProps) {
-  const [, setImageFile] = useState<File | null>(null);
-  const [isUploading, setIsUploading] = useState(false);
+  // const [, setImageFile] = useState<File | null>(null);
+  // const [isUploading, setIsUploading] = useState(false);
 
   const handleTextChange = (text: string) => {
     const knownIngredients = ingredients.map((i) => i.name);
@@ -27,30 +23,30 @@ export function StepEditor({ step, ingredients, onChange }: StepEditorProps) {
     });
   };
 
-  const handleImageUpload = async (file: File) => {
-    setIsUploading(true);
-    try {
-      const formData = new FormData();
-      formData.append("image", file);
+  // const handleImageUpload = async (file: File) => {
+  //   setIsUploading(true);
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append("image", file);
 
-      const response = await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
-      });
+  //     const response = await fetch("/api/upload", {
+  //       method: "POST",
+  //       body: formData,
+  //     });
 
-      if (!response.ok) throw new Error("Upload failed");
+  //     if (!response.ok) throw new Error("Upload failed");
 
-      const { url } = await response.json();
-      onChange({
-        ...step,
-        image: url,
-      });
-    } catch (error) {
-      console.error("Failed to upload image:", error);
-    } finally {
-      setIsUploading(false);
-    }
-  };
+  //     const { url } = await response.json();
+  //     onChange({
+  //       ...step,
+  //       image: url,
+  //     });
+  //   } catch (error) {
+  //     console.error("Failed to upload image:", error);
+  //   } finally {
+  //     setIsUploading(false);
+  //   }
+  // };
 
   return (
     <div className="space-y-4">
@@ -59,7 +55,7 @@ export function StepEditor({ step, ingredients, onChange }: StepEditorProps) {
         onChange={(e) => handleTextChange(e.target.value)}
         className="h-24"
       />
-      <div className="flex items-center gap-4">
+      {/* <div className="flex items-center gap-4">
         <Input
           type="file"
           accept="image/*"
@@ -92,7 +88,7 @@ export function StepEditor({ step, ingredients, onChange }: StepEditorProps) {
             </Button>
           </div>
         )}
-      </div>
+      </div> */}
       <div className="flex flex-wrap gap-2">
         {step.usedIngredients.map((ingredient) => (
           <span

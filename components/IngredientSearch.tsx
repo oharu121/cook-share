@@ -6,9 +6,20 @@ import { Ingredient } from "@/types/recipe";
 interface IngredientSearchProps {
   onSelect: (ingredient: Ingredient) => void;
   lang: "en" | "ja";
+  dict: {
+    ingredients: {
+      title: string;
+      addButton: string;
+      searchPlaceholder: string;
+    };
+  };
 }
 
-export function IngredientSearch({ onSelect, lang }: IngredientSearchProps) {
+export function IngredientSearch({
+  onSelect,
+  lang,
+  dict,
+}: IngredientSearchProps) {
   const [search, setSearch] = useState("");
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
   const [loading, setLoading] = useState(false);
@@ -43,7 +54,7 @@ export function IngredientSearch({ onSelect, lang }: IngredientSearchProps) {
       <Input
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        placeholder="Search ingredients..."
+        placeholder={dict.ingredients.searchPlaceholder}
         className="w-full"
       />
       {search.length >= 2 && (
