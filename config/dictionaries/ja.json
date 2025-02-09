@@ -186,10 +186,12 @@
     "ingredients": {
       "title": "材料",
       "addButton": "材料を追加",
+      "removeButton": "削除",
       "searchPlaceholder": "材料を検索..."
     },
     "steps": {
       "title": "手順",
+      "step": "ステップ",
       "addButton": "手順を追加"
     },
     "details": {

@@ -33,10 +33,12 @@ interface EditRecipeFormProps {
     ingredients: {
       title: string;
       addButton: string;
+      removeButton: string;
       searchPlaceholder: string;
     };
     steps: {
       title: string;
+      step: string;
       addButton: string;
     };
     details: {
@@ -146,7 +148,7 @@ export function EditRecipeForm({ lang, dict, recipeId }: EditRecipeFormProps) {
             />
           </div>
           <div>
-            <Label>Description</Label>
+            <Label>{dict.basicInfo.description}</Label>
             <Textarea
               value={recipe.description}
               onChange={(e) =>
@@ -178,7 +180,7 @@ export function EditRecipeForm({ lang, dict, recipeId }: EditRecipeFormProps) {
                   }
                 }}
               >
-                Add
+                {dict.basicInfo.addTag}
               </Button>
             </div>
             <div className="flex flex-wrap gap-2">
@@ -210,14 +212,45 @@ export function EditRecipeForm({ lang, dict, recipeId }: EditRecipeFormProps) {
       <Card className="p-6">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-semibold">{dict.ingredients.title}</h2>
-          <IngredientSearch onSelect={addIngredient} lang={lang} />
+          <IngredientSearch onSelect={addIngredient} lang={lang} dict={dict} />
         </div>
         <div className="space-y-2">
           {recipe.ingredients?.map((ingredient, index) => (
             <div key={ingredient.id} className="flex items-center gap-2">
-              <span>
-                {ingredient.amount} {ingredient.unit} {ingredient.name}
-              </span>
+              <Input
+                type="number"
+                value={ingredient.amount}
+                onChange={(e) => {
+                  const newAmount = parseFloat(e.target.value) || 0;
+                  setRecipe((prev) => ({
+                    ...prev,
+                    ingredients: prev?.ingredients?.map((ing, i) =>
+                      i === index ? { ...ing, amount: newAmount } : ing,
+                    ),
+                  }));
+                }}
+                className="w-20"
+              />
+              <select
+                value={ingredient.unit || ""}
+                onChange={(e) => {
+                  const newUnit = e.target.value;
+                  setRecipe((prev) => ({
+                    ...prev,
+                    ingredients: prev?.ingredients?.map((ing, i) =>
+                      i === index ? { ...ing, unit: newUnit } : ing,
+                    ),
+                  }));
+                }}
+                className="border rounded p-1"
+              >
+                {ingredient.units.map((unit) => (
+                  <option key={unit.id} value={unit.name}>
+                    {unit.name}
+                  </option>
+                ))}
+              </select>
+              <span>{ingredient.name}</span>
               <Button
                 type="button"
                 variant="ghost"
@@ -230,7 +263,7 @@ export function EditRecipeForm({ lang, dict, recipeId }: EditRecipeFormProps) {
                   }));
                 }}
               >
-                Remove
+                {dict.ingredients.removeButton}
               </Button>
             </div>
           ))}
@@ -308,19 +341,24 @@ export function EditRecipeForm({ lang, dict, recipeId }: EditRecipeFormProps) {
         </div>
         <div className="space-y-2">
           {recipe.steps?.map((step, index) => (
-            <StepEditor
-              key={step.id}
-              step={step}
-              ingredients={recipe.ingredients || []}
-              onChange={(updated) => {
-                setRecipe((prev) => ({
-                  ...prev,
-                  steps: prev?.steps?.map((s, i) =>
-                    i === index ? updated : s,
-                  ),
-                }));
-              }}
-            />
+            <div key={step.id}>
+              <Label>
+                {dict.steps.step} {index + 1}
+              </Label>
+              <StepEditor
+                key={step.id}
+                step={step}
+                ingredients={recipe.ingredients || []}
+                onChange={(updated) => {
+                  setRecipe((prev) => ({
+                    ...prev,
+                    steps: prev?.steps?.map((s, i) =>
+                      i === index ? updated : s,
+                    ),
+                  }));
+                }}
+              />
+            </div>
           ))}
         </div>
       </Card>
