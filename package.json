@@ -21,8 +21,8 @@
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.11.1",
-    "@faker-js/faker": "^10.1.0",
-    "@formatjs/intl-localematcher": "^0.7.3",
+    "@faker-js/faker": "^10.2.0",
+    "@formatjs/intl-localematcher": "^0.7.4",
     "@hookform/resolvers": "^5.2.2",
     "@prisma/client": "^7.2.0",
     "@radix-ui/react-avatar": "^1.1.11",
@@ -48,10 +48,10 @@
     "next-i18next": "^15.4.3",
     "react": "19.2.3",
     "react-dom": "19.2.3",
-    "react-hook-form": "^7.69.0",
+    "react-hook-form": "^7.70.0",
     "tailwind-merge": "^3.4.0",
     "tailwindcss-animate": "^1.0.7",
-    "zod": "^4.2.1"
+    "zod": "^4.3.5"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
