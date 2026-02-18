@@ -51,7 +51,7 @@ function getLocale(req: NextRequest): string {
   }
 }
 
-export async function middleware(req: NextRequest) {
+export async function proxy(req: NextRequest) {
   const lang = getLocale(req);
   const path = req.nextUrl.pathname;
 
