@@ -13,10 +13,11 @@ export default async function LocaleLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: Promise<{ lang: "en" | "ja" }>;
+  params: Promise<{ lang: string }>;
 }) {
-  const lang = languages.includes((await params).lang as any) // eslint-disable-line @typescript-eslint/no-explicit-any
-    ? (await params).lang
+  const resolvedParams = await params;
+  const lang = languages.includes(resolvedParams.lang as "en" | "ja")
+    ? (resolvedParams.lang as "en" | "ja")
     : "ja";
   const dict = await getDictionary(lang);
 

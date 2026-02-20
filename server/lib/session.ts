@@ -9,8 +9,13 @@ type SessionPayload = {
   id: string;
 };
 
-const secretKey = process.env.SESSION_SECRET || "your-secret-key";
-const encodedKey = new TextEncoder().encode(secretKey);
+function getEncodedKey() {
+  const secretKey = process.env.SESSION_SECRET;
+  if (!secretKey) {
+    throw new Error("SESSION_SECRET environment variable is required");
+  }
+  return new TextEncoder().encode(secretKey);
+}
 
 /**
  * Encrypts the session payload into a JWT.
@@ -21,7 +26,7 @@ export async function encrypt(payload: SessionPayload) {
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
     .setExpirationTime("7d")
-    .sign(encodedKey);
+    .sign(getEncodedKey());
 }
 
 /**
@@ -34,7 +39,7 @@ export async function decrypt(session: string | undefined = "") {
       throw new Error("Session is empty or undefined");
     }
 
-    const { payload } = await jwtVerify(session, encodedKey, {
+    const { payload } = await jwtVerify(session, getEncodedKey(), {
       algorithms: ["HS256"],
     });
 

@@ -8,7 +8,7 @@ import { getDictionary } from "@/config/dictionaries";
 
 interface RecipeDetailPageProps {
   params: Promise<{
-    lang: "en" | "ja";
+    lang: string;
     id: string;
   }>;
 }

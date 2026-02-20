@@ -17,7 +17,7 @@ export default async function NotFound() {
         <h2 className="text-xl text-muted-foreground mb-4">
           {dict.notFound.subtitle}
         </h2>
-        <p className="text-center text-muted-foreground max-w-[500px] mb-8">
+        <p className="text-center text-muted-foreground max-w-125 mb-8">
           {dict.notFound.description}
         </p>
         <Button asChild>

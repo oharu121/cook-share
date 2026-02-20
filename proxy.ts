@@ -3,8 +3,8 @@ import { match } from "@formatjs/intl-localematcher";
 import { verifySession } from "@/server/lib/session";
 import Negotiator from "negotiator";
 
-let locales = ["en", "ja"];
-let defaultLocale = "ja";
+const locales = ["en", "ja"];
+const defaultLocale = "ja";
 
 // Define protected and public routes
 const protectedRoutes = [
@@ -34,7 +34,7 @@ function getLocale(req: NextRequest): string {
   const negotiatorHeaders: Record<string, string> = {};
   req.headers.forEach((value, key) => (negotiatorHeaders[key] = value));
 
-  let languages = new Negotiator({ headers: negotiatorHeaders }).languages();
+  const languages = new Negotiator({ headers: negotiatorHeaders }).languages();
   console.log("Languages detected:", languages);
 
   // Ensure languages array is valid

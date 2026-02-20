@@ -92,9 +92,11 @@ export async function getShoppingListById(id: string) {
   const shoppingList = await prisma.shoppingList.findUnique({
     where: { id },
     include: {
-      items: true, // Fetch items without including ingredient details
+      items: {
+        include: { ingredient: true },
+      },
       recipes: {
-        include: { recipe: true }, // Ensure recipe details are fetched
+        include: { recipe: true },
       },
     },
   });
@@ -103,23 +105,7 @@ export async function getShoppingListById(id: string) {
     throw new Error("Shopping list not found");
   }
 
-  // Fetch ingredient details for each item
-  const itemsWithIngredients = await Promise.all(
-    shoppingList.items.map(async (item) => {
-      const ingredient = await prisma.ingredient.findUnique({
-        where: { id: item.ingredientId },
-      });
-      return {
-        ...item,
-        ingredient,
-      };
-    }),
-  );
-
-  return {
-    ...shoppingList,
-    items: itemsWithIngredients,
-  };
+  return shoppingList;
 }
 
 export async function getShoppingLists() {

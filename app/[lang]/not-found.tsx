@@ -9,8 +9,8 @@ export default async function NotFound() {
   const headersList = await headers();
   const pathname = headersList.get("x-pathname") || "";
   const urlLang = pathname.split("/")[1];
-  const lang = languages.includes(urlLang as any) ? urlLang : "en"; // eslint-disable-line @typescript-eslint/no-explicit-any
-  const dict = await getDictionary(lang as "en" | "ja");
+  const lang = languages.includes(urlLang as "en" | "ja") ? urlLang : "en";
+  const dict = await getDictionary(lang);
 
   return (
     <div className="flex-1 flex items-center justify-center">
@@ -19,7 +19,7 @@ export default async function NotFound() {
         <h2 className="text-xl text-muted-foreground mb-4">
           {dict.notFound.subtitle}
         </h2>
-        <p className="text-center text-muted-foreground max-w-[500px] mb-8">
+        <p className="text-center text-muted-foreground max-w-125 mb-8">
           {dict.notFound.description}
         </p>
         <Button asChild>

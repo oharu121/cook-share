@@ -6,7 +6,7 @@ import { getDictionary } from "@/config/dictionaries";
 export default async function SignupPage({
   params,
 }: {
-  params: Promise<{ lang: "en" | "ja" }>;
+  params: Promise<{ lang: string }>;
 }) {
   const lang = (await params).lang;
   const dict = await getDictionary(lang);

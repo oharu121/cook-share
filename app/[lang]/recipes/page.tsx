@@ -8,7 +8,7 @@ import { getUserRecipes } from "@/server/dal/recipe";
 export default async function RecipesPage({
   params,
 }: {
-  params: Promise<{ lang: "en" | "ja" }>;
+  params: Promise<{ lang: string }>;
 }) {
   // Await the searchParams
   const { lang } = await params;

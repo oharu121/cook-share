@@ -109,7 +109,7 @@ export async function getRecipe(id: string) {
       } catch {
         return [];
       }
-    })() as any[], // ✅ If subRecipes are dynamic, use `any[]`
+    })() as unknown[],
   };
 }
 

@@ -10,7 +10,7 @@ export default async function BrowsePage({
   params,
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-  params: Promise<{ lang: "en" | "ja" }>;
+  params: Promise<{ lang: string }>;
 }) {
   const lang = (await params).lang;
   const dict = await getDictionary(lang);

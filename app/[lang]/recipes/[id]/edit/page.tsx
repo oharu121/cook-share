@@ -2,7 +2,7 @@ import { EditRecipeForm } from "@/components/recipe/edit-recipe-form";
 import { getDictionary } from "@/config/dictionaries";
 
 interface EditRecipePageProps {
-  params: Promise<{ lang: "en" | "ja"; id: string }>;
+  params: Promise<{ lang: string; id: string }>;
 }
 
 export default async function EditRecipePage({ params }: EditRecipePageProps) {

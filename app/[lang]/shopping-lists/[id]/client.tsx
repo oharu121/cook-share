@@ -37,8 +37,21 @@ export default function ShoppingListDetailClient({
   }, [id]);
 
   useEffect(() => {
-    fetchShoppingList();
-  }, [fetchShoppingList]);
+    let cancelled = false;
+    async function load() {
+      try {
+        const response = await fetch(`/api/shopping-list/${id}`);
+        if (response.ok && !cancelled) {
+          const list = await response.json();
+          setShoppingList(list);
+        }
+      } catch (error) {
+        if (!cancelled) console.error("Error fetching shopping list:", error);
+      }
+    }
+    load();
+    return () => { cancelled = true; };
+  }, [id]);
 
   const handleCheck = async (itemId: string) => {
     try {

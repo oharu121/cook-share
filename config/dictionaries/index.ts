@@ -7,7 +7,7 @@ const dictionaries = {
 };
 
 export type DictionaryType = typeof enJson;
-export const getDictionary = async (locale: "en" | "ja") => {
+export const getDictionary = async (locale: string) => {
   return (
     dictionaries[locale as keyof typeof dictionaries]?.() ?? dictionaries.ja()
   );

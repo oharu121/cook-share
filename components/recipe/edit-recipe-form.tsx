@@ -20,7 +20,7 @@ import { IngredientSearch } from "@/components/IngredientSearch";
 import { StepEditor } from "@/components/StepEditor";
 
 interface EditRecipeFormProps {
-  lang: "en" | "ja";
+  lang: string;
   dict: {
     edit: string;
     basicInfo: {

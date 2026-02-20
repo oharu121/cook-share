@@ -4,7 +4,7 @@ import { CreateRecipeForm } from "@/components/recipe/create-recipe-form";
 import { getDictionary } from "@/config/dictionaries";
 
 interface CreateRecipePageProps {
-  params: Promise<{ lang: "en" | "ja" }>;
+  params: Promise<{ lang: string }>;
 }
 
 export default async function CreateRecipePage({

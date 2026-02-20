@@ -17,11 +17,11 @@ import {
 } from "@/components/ui/select";
 import { IngredientSearch } from "@/components/IngredientSearch";
 import { StepEditor } from "@/components/StepEditor";
-// import { SubRecipeEditor } from "@/components/SubRecipeEditor";
+
 import { useRouter, useSearchParams } from "next/navigation";
 
 interface CreateRecipeFormProps {
-  lang: "en" | "ja";
+  lang: string;
   dict: {
     create: string;
     basicInfo: {
@@ -141,20 +141,6 @@ export function CreateRecipeForm({ lang, dict }: CreateRecipeFormProps) {
       steps: [...(prev.steps || []), step],
     }));
   };
-
-  // const addSubRecipe = () => {
-  //   const subRecipe: SubRecipe = {
-  //     id: crypto.randomUUID(),
-  //     name: "",
-  //     ingredients: [],
-  //     steps: [],
-  //   };
-
-  //   setRecipe((prev) => ({
-  //     ...prev,
-  //     subRecipes: [...(prev.subRecipes || []), subRecipe],
-  //   }));
-  // };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -311,38 +297,6 @@ export function CreateRecipeForm({ lang, dict }: CreateRecipeFormProps) {
           ))}
         </div>
       </Card>
-
-      {/* Sub-Recipes */}
-      {/* <Card className="p-6">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold">Sub-Recipes</h2>
-          <Button type="button" onClick={addSubRecipe}>
-            Add Sub-Recipe
-          </Button>
-        </div>
-        <div className="space-y-4">
-          {recipe.subRecipes?.map((subRecipe, index) => (
-            <SubRecipeEditor
-              key={subRecipe.id}
-              subRecipe={subRecipe}
-              onChange={(updated) => {
-                setRecipe((prev) => ({
-                  ...prev,
-                  subRecipes: prev.subRecipes?.map((sr, i) =>
-                    i === index ? updated : sr,
-                  ),
-                }));
-              }}
-              onDelete={() => {
-                setRecipe((prev) => ({
-                  ...prev,
-                  subRecipes: prev.subRecipes?.filter((_, i) => i !== index),
-                }));
-              }}
-            />
-          ))}
-        </div>
-      </Card> */}
 
       {/* Steps */}
       <Card className="p-6">

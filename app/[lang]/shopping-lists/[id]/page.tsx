@@ -1,7 +1,7 @@
 import ShoppingListDetailClient from "./client";
 import { getDictionary } from "@/config/dictionaries";
 interface ShoppingListDetailPageProps {
-  params: Promise<{ id: string; lang: "en" | "ja" }>;
+  params: Promise<{ id: string; lang: string }>;
 }
 
 export default async function ShoppingListDetailPage({

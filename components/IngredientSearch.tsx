@@ -5,7 +5,7 @@ import { Ingredient } from "@/types/recipe";
 
 interface IngredientSearchProps {
   onSelect: (ingredient: Ingredient) => void;
-  lang: "en" | "ja";
+  lang: string;
   dict: {
     ingredients: {
       title: string;

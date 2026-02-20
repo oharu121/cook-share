@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default async function LandingPage({
   params,
 }: {
-  params: Promise<{ lang: "en" | "ja" }>;
+  params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
   const dict = await getDictionary(lang);

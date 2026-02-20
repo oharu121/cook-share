@@ -5,9 +5,8 @@ import {
   toRecipeDTO,
   toRecipeListDTO,
 } from "@/server/dto/recipe.dto";
-import { Prisma, PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { Prisma } from "@prisma/client";
+import { prisma } from "@/server/db";
 
 export async function GET(request: Request) {
   try {
